@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Check Yo' Self</title>
+  <link rel="stylesheet" type="text/css" href="reset.css">
+  <link rel="stylesheet" type="text/css" href="styles.css">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700,800&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header>
+    <h1>CHECK <span class="header__h1--yellow">YO'</span> SELF </h1>
+    <form>
+      <img>
+      <input placeholder="Search">
+    </form>
+  </header>
+  <main class="main__content">
+    <aside>
+      <section class="aside__top-section">
+        <form class="aside__new-title-form">
+          <label>Task Title</label>
+          <input class="aside__new-title-input">
+        </form>
+        <form class="aside__new-task-form">
+          <label class="aside__new-task-label">Task Item</label>
+          <input class="aside__new-task-input">
+           <button class="aside__new-task-button">
+            <img>
+          </button>
+        </form>
+        <button class="aside__make-task-list-button">Make Task List</button>
+        <button class="aside__clear-all-button">Clear All</button>
+      </section>
+      <section class="aside__filter-section">
+        <button class="aside__filter-by-urgency-button">Filter by Urgency</button>
+      </section>
+    </aside>
+    <section class="aside__new-task-list-container">
+      <article>
+        <h2 class="card__idea-header">Task Title</h2>
+        <main class="card__todo-list-items">
+          <ul>
+            <li>
+              <img>
+              Task Item
+            </li>
+            <li>
+              <img>
+              Task Item
+            </li>
+          </ul>
+        </main>
+        <footer class="card__footer">
+          <div>
+            <img>
+            Urgent
+          </div>
+          <div>
+            <img>
+            Delete
+          </div>
+        </footer>
+      </article>
+    </section>
+  </main>
+</body>
+  <script type="text/javascript" src="todo-list.js"></script>
+  <script type="text/javascript" src="main.js"></script>
+</html>

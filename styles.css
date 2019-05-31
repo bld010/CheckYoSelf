@@ -1,0 +1,143 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Open Sans', sans-serif; 
+}
+
+header{
+  background-color: #1F1F3D;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  height: 60px;
+  padding: 10px;
+}
+
+h1 {
+  font-size: 35px;
+  font-weight: 800;
+  color: #FFFFFF;
+}
+
+.header__h1--yellow{
+  color: #FFC30C;
+}
+
+aside {
+  height: 100%;
+  min-height: 93vh;
+  width: 30%;
+  background-color: #587A8A;
+}
+
+label {
+  display: block;
+}
+
+.aside__new-task-input, 
+.aside__new-title-input {
+  height: 30px;
+  border: 2px solid #1F1F3D;
+}
+
+.aside__new-title-input {
+  width: 100%;
+}
+
+.aside__new-task-input {
+  width: 80%;
+}
+
+.aside__make-task-list-button,
+.aside__clear-all-button, 
+.aside__filter-by-urgency-button {
+  margin: 20px auto 10px auto;
+  width: 95%;
+  height: 50px;
+  font-family: 'Open Sans', sans-serif;
+  border-radius: 2.5px;
+  background-color: #1F1F3D;
+  border: none;
+  color: #FFFFFF;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.aside__new-title-form, 
+.aside__new-task-form {
+  width: 100%;
+  padding: 10px
+}
+
+.aside__filter-by-urgency-button {
+  margin-top: 30px;
+}
+
+.aside__filter-section {
+  padding: 0px auto 0px auto;
+  border-top: 2px solid black;
+  margin-top: 20px;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+section {
+  width: 70%;
+}
+
+article {
+  width: 45%;
+  border: 2px solid #C7D3D8;
+  padding: 10px 0 10px 0;
+  min-height: 250px;
+  background-color: #FAFDFF;
+}
+
+
+.main__content {
+  display: flex;
+}
+
+.aside__new-task-list-container {
+  padding: 30px;
+}
+
+.card__idea-header {
+  width: 100%;
+  border-bottom: 2px solid #C7D3D8;
+  padding: 0 10px 0 10px;
+  height: 30px;
+  font-size: 20px;
+  font-weight: 700;
+  color: #1F1F3D;
+}
+
+.card__todo-list-items {
+  min-height: 170px;
+  padding: 20px 10px 20px 10px;
+}
+
+.aside__top-section{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.card__footer {
+  border-top: 2px solid #C7D3D8; 
+  display: flex;
+  padding: 0 10px 0 10px;
+  height: 50px;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+li {
+  font-size: 20px;
+  padding-bottom: 30px;
+}
