@@ -10,10 +10,10 @@
   <header>
     <h1>CHECK <span class="header__h1--yellow">YO'</span> SELF </h1>
     <form class="header__search-form">
-      <button class="header__search-button">
-        <img class="header__search-button-image" src="images/search.svg">
+      <button id="header__search-button">
+        <img src="images/search.svg">
       </button>
-      <input class="header__search-input" placeholder="  Search">
+      <input id="header__search-input" placeholder="  Search">
     </form>
   </header>
   <main class="main__content">
@@ -21,28 +21,27 @@
       <section class="aside__top-section">
         <form class="aside__new-title-form">
           <label>Task Title</label>
-          <input class="aside__new-title-input">
+          <input>
         </form>
-        <form class="aside__new-task-form">
+        <form class="aside__new-task-form" id="aside__new-task-form">
           <label class="aside__new-task-label">Task Item</label>
             <div class="aside__new-task-form-input-container">
-              <input class="aside__new-task-input">
-<!--                <button class="aside__new-task-button">
- -->                <img src="images/add.svg" class="aside__new-task-button">
-<!--               </button>
- -->            </div>
+              <input class="aside__new-task-input" id="aside__new-task-input">
+                <img src="images/add.svg" class="aside__new-task-button">
+            </div>
         </form>
-        <button class="aside__make-task-list-button">Make Task List</button>
-        <button class="aside__clear-all-button">Clear All</button>
+        <button id="aside__make-task-list-button">Make Task List</button>
+        <button id="aside__clear-all-button">Clear All</button>
       </section>
       <section class="aside__filter-section">
-        <button class="aside__filter-by-urgency-button">Filter by Urgency</button>
+        <button id="aside__filter-by-urgency-button">Filter by Urgency</button>
       </section>
     </aside>
-    <section class="aside__new-task-list-container">
+    <section class="section__task-list-container">
+
       <article>
-        <h2 class="card__idea-header">Task Title</h2>
-        <main class="card__todo-list-items">
+        <h2>Task Title</h2>
+        <main>
           <ul>
             <li>
               <img src="images/checkbox.svg">
@@ -54,8 +53,160 @@
             </li>
           </ul>
         </main>
-        <footer class="card__footer">
-          <div class="card__footer-urgent-button">
+        <footer>
+          <div id="card__footer-urgent-button">
+            <img src="images/urgent.svg">
+            <p>Urgent</p>
+          </div>
+          <div class="card__footer-delete-button">
+            <img src="images/delete.svg">
+            <p>Delete</p>
+          </div>
+        </footer>
+      </article>
+
+      <article>
+        <h2>Task Title</h2>
+        <main>
+          <ul>
+            <li>
+              <img src="images/checkbox.svg">
+              Task Item
+            </li>
+            <li>
+              <img src="images/checkbox.svg">
+              Task Item
+            </li>
+          </ul>
+        </main>
+        <footer>
+          <div id="card__footer-urgent-button">
+            <img src="images/urgent.svg">
+            <p>Urgent</p>
+          </div>
+          <div class="card__footer-delete-button">
+            <img src="images/delete.svg">
+            <p>Delete</p>
+          </div>
+        </footer>
+      </article>
+
+      <article>
+        <h2>Task Title</h2>
+        <main>
+          <ul>
+            <li>
+              <img src="images/checkbox.svg">
+              Task Item
+            </li>
+            <li>
+              <img src="images/checkbox.svg">
+              Task Item
+            </li>
+          </ul>
+        </main>
+        <footer>
+          <div id="card__footer-urgent-button">
+            <img src="images/urgent.svg">
+            <p>Urgent</p>
+          </div>
+          <div class="card__footer-delete-button">
+            <img src="images/delete.svg">
+            <p>Delete</p>
+          </div>
+        </footer>
+      </article>
+
+      <article>
+        <h2>Task Title</h2>
+        <main>
+          <ul>
+            <li>
+              <img src="images/checkbox.svg">
+              Task Item
+            </li>
+            <li>
+              <img src="images/checkbox.svg">
+              Task Item
+            </li>
+          </ul>
+        </main>
+        <footer>
+          <div id="card__footer-urgent-button">
+            <img src="images/urgent.svg">
+            <p>Urgent</p>
+          </div>
+          <div class="card__footer-delete-button">
+            <img src="images/delete.svg">
+            <p>Delete</p>
+          </div>
+        </footer>
+      </article><article>
+        <h2>Task Title</h2>
+        <main>
+          <ul>
+            <li>
+              <img src="images/checkbox.svg">
+              Task Item
+            </li>
+            <li>
+              <img src="images/checkbox.svg">
+              Task Item
+            </li>
+          </ul>
+        </main>
+        <footer>
+          <div id="card__footer-urgent-button">
+            <img src="images/urgent.svg">
+            <p>Urgent</p>
+          </div>
+          <div class="card__footer-delete-button">
+            <img src="images/delete.svg">
+            <p>Delete</p>
+          </div>
+        </footer>
+      </article><article>
+        <h2>Task Title</h2>
+        <main>
+          <ul>
+            <li>
+              <img src="images/checkbox.svg">
+              Task Item
+            </li>
+            <li>
+              <img src="images/checkbox.svg">
+              Task Item
+            </li>
+          </ul>
+        </main>
+        <footer>
+          <div id="card__footer-urgent-button">
+            <img src="images/urgent.svg">
+            <p>Urgent</p>
+          </div>
+          <div class="card__footer-delete-button">
+            <img src="images/delete.svg">
+            <p>Delete</p>
+          </div>
+        </footer>
+      </article>
+
+      <article>
+        <h2>Task Title</h2>
+        <main>
+          <ul>
+            <li>
+              <img src="images/checkbox.svg">
+              Task Item
+            </li>
+            <li>
+              <img src="images/checkbox.svg">
+              Task Item
+            </li>
+          </ul>
+        </main>
+        <footer>
+          <div id="card__footer-urgent-button">
             <img src="images/urgent.svg">
             <p>Urgent</p>
           </div>
@@ -71,6 +222,26 @@
         <main class="card__todo-list-items">
           <ul>
             <li>
+              <img src="images/checkbox.svg">
+              Task Item
+            </li>
+            <li>
+              <img src="images/checkbox.svg">
+              Task Item
+            </li>
+             <li>
+              <img src="images/checkbox.svg">
+              Task Item
+            </li>
+             <li>
+              <img src="images/checkbox.svg">
+              Task Item
+            </li>
+             <li>
+              <img src="images/checkbox.svg">
+              Task Item
+            </li>
+             <li>
               <img src="images/checkbox.svg">
               Task Item
             </li>
