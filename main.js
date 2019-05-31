@@ -10,7 +10,8 @@ var potentialItemList = document.querySelector('#aside__potential-items-list');
 var taskListArray = []
 
 
-newTaskItemButton.addEventListener('click', newTaskItemHandler)
+newTaskItemButton.addEventListener('click', newTaskItemHandler);
+potentialItemList.addEventListener('click', deletePotentialItem);
 
 function newTaskItemHandler() {
   newToDoItem(newTaskItemInput.value)
@@ -25,9 +26,16 @@ function newToDoItem(input){
 function apendPotentialItems(input){
   var newPotentialItem = `
   <li class="aside__potential-items-item">
-    <img src="images/delete-list-item.svg">
+    <img src="images/delete-list-item.svg" class="delete-list-item">
     ${input}
   </li>`
   potentialItemList.insertAdjacentHTML('beforeend',newPotentialItem)
 }
 
+function deletePotentialItem(e) {
+  console.log(e.target.classList)
+  if (e.target.classList.contains("delete-list-item")) {
+    var listItemToDelete = e.target;
+    listItemToDelete.parentNode.remove();
+  }
+}
