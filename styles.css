@@ -156,8 +156,8 @@ article {
   padding: 10px 0 0 0;
   min-height: 250px;
   background-color: #FAFDFF;
+  margin-bottom: 30px
 }
-
 
 .main__content {
   display: flex;
@@ -176,6 +176,7 @@ article {
   font-weight: 700;
   color: #1F1F3D;
 }
+
 
 .card__todo-list-items {
   min-height: 170px;
@@ -221,4 +222,39 @@ footer img {
 li {
   font-size: 20px;
   padding-bottom: 30px;
+  display: flex;
+  align-items: flex-start;
 }
+
+li img {
+  height: 20px;
+  width: 20px;
+  margin: 0 10px 10px 0;
+  /*padding-top: 5px;*/
+  /*margin-top: op: 5px;*/
+}
+ 
+/*Urgent Card Styles*/
+
+.urgent .card__urgent_button_text {
+  color: #B23A25;
+}
+
+.urgent > footer{
+    border-top: 2px solid #FFC30C;
+}
+
+article + .urgent {
+  background-color: #FFE89D;
+  border: 2px solid #FFC30C;
+}
+
+.urgent > h2 {
+  border-bottom: 2px solid #FFC30C;
+}
+
+.urgent img.card__footer-urgent-button-image {
+  content: url('images/urgent-active.svg');
+} 
+
+
