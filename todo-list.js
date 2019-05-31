@@ -22,3 +22,11 @@ class ToDoList {
 
   }
 }
+
+
+class ToDoItem {
+  constructor(body){
+    this.checked = false;
+    this.body = body;
+  }
+}
