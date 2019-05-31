@@ -2,8 +2,13 @@
   box-sizing: border-box;
 }
 
+html {
+  /*height: auto;*/
+}
+
 body {
-  font-family: 'Open Sans', sans-serif; 
+  font-family: 'Open Sans', sans-serif;
+  height: 100vh; 
 }
 
 header{
@@ -25,12 +30,12 @@ h1 {
   color: #FFC30C;
 }
 
-.header__search-form {
+header form {
   display: flex;
   width: 30%;
 }
 
-.header__search-button {
+header button {
   height: 50px;
   width: 50px;
   border-radius: 2.5px 0 0 2.5px;
@@ -39,12 +44,12 @@ h1 {
   border: none;
 }
 
-.header__search-button-image {
+header img {
   height: 30px;
   width: 30px;
 }
 
-.header__search-input {
+header input {
   height: 50px;
   width: 100%;
   border: none;
@@ -54,8 +59,8 @@ h1 {
 }
 
 aside {
-  height: 100%;
-  min-height: 93vh;
+  height: auto;
+  /*min-height: 93vh;*/
   width: 30%;
   background-color: #587A8A;
   border-right: 2px solid #3C6577;;
@@ -69,8 +74,7 @@ label {
   font-weight: 700;
 }
 
-.aside__new-task-input, 
-.aside__new-title-input {
+aside input {
   height: 50px;
   border: 2px solid #1F1F3D;
   border-radius: 2.5px;
@@ -78,7 +82,7 @@ label {
   font-size: 18px;
 }
 
-.aside__new-title-input {
+.aside__new-title-form input {
   width: 100%;
 }
 
@@ -88,9 +92,7 @@ label {
   margin-right: -2px;
 }
 
-.aside__make-task-list-button,
-.aside__clear-all-button, 
-.aside__filter-by-urgency-button {
+aside button {
   margin: 20px auto 10px auto;
   width: 95%;
   height: 50px;
@@ -103,21 +105,11 @@ label {
   font-weight: 700;
 }
 
-.aside__new-title-form, 
-.aside__new-task-form {
+aside form {
   width: 100%;
   padding: 10px
 }
 
-/*.aside__new-task-button {
-  background-color: #1F1F3D;
-  height: 50px;
-  width: 50px;
-  color: #FFFFFF;
-  font-size: 80px;
-  padding: 0;
-}
-*/
 .aside__new-task-form-input-container {
   display: flex
 }
@@ -132,18 +124,17 @@ label {
   padding: 10px;
 }
 
-.aside__filter-by-urgency-button {
-  margin-top: 30px;
-}
-
 .aside__filter-section {
   padding: 0px auto 0px auto;
   border-top: 2px solid #3C6577;
   margin-top: 20px;
   width: 100%;
-  height: 100%;
   display: flex;
   justify-content: center;
+}
+
+.aside__filter-section button {
+  margin-top: 30px;
 }
 
 section {
@@ -151,23 +142,27 @@ section {
 }
 
 article {
-  width: 45%;
+  width: 100%;
   border: 2px solid #C7D3D8;
   padding: 10px 0 0 0;
   min-height: 250px;
   background-color: #FAFDFF;
-  margin-bottom: 30px
+  margin-bottom: 30px;
+  break-inside: avoid;
 }
 
 .main__content {
   display: flex;
 }
 
-.aside__new-task-list-container {
+.section__task-list-container {
   padding: 30px;
+  height: auto;
+  columns: 2 250px;
+  column-gap: 30px;
 }
 
-.card__idea-header {
+article h2 {
   width: 100%;
   border-bottom: 2px solid #C7D3D8;
   padding: 0 10px 0 10px;
@@ -177,12 +172,6 @@ article {
   color: #1F1F3D;
 }
 
-
-.card__todo-list-items {
-  min-height: 170px;
-  padding: 20px 10px 20px 10px;
-}
-
 .aside__top-section{
   width: 100%;
   display: flex;
@@ -190,7 +179,12 @@ article {
   flex-direction: column;
 }
 
-.card__footer {
+article main {
+  min-height: 170px;
+  padding: 20px 10px 0px 10px;
+}
+
+article footer {
   border-top: 2px solid #C7D3D8; 
   display: flex;
   padding: 5px 10px 0px 10px;
@@ -199,7 +193,7 @@ article {
   align-items: flex-end;
 }
 
-.card__footer div {
+footer div {
   height: 40px;
   width: 40px;
   display: flex;
@@ -207,7 +201,7 @@ article {
   align-items: center;
 }
 
-.card__footer p {
+footer p {
   text-transform: uppercase;
   font-size: 11px;
   margin-top: 5px;
@@ -230,26 +224,20 @@ li img {
   height: 20px;
   width: 20px;
   margin: 0 10px 10px 0;
-  /*padding-top: 5px;*/
-  /*margin-top: op: 5px;*/
 }
  
 /*Urgent Card Styles*/
 
-.urgent .card__urgent_button_text {
-  color: #B23A25;
-}
-
-.urgent > footer{
-    border-top: 2px solid #FFC30C;
-}
-
-article + .urgent {
+.urgent {
   background-color: #FFE89D;
   border: 2px solid #FFC30C;
 }
 
-.urgent > h2 {
+.urgent footer{
+  border-top: 2px solid #FFC30C;
+}
+
+.urgent h2 {
   border-bottom: 2px solid #FFC30C;
 }
 
@@ -257,4 +245,7 @@ article + .urgent {
   content: url('images/urgent-active.svg');
 } 
 
+.urgent .card__urgent_button_text {
+  color: #B23A25;
+}
 
