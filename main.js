@@ -18,14 +18,14 @@ potentialItemList.addEventListener('click', deletePotentialItem);
 newTaskForm.addEventListener('keyup', function(){
   newTaskButtonHandler(newTaskItemButton, newTaskItemInput)
 })
-listTitleInput.addEventListener('keyup', makeListButtonHandler)
+listTitleInput.addEventListener('keyup', makeListButtonEnabler)
 
 
 function pageLoadHandler() {
  disableButton(newTaskItemButton, newTaskItemInput);
 }
 
-function makeListButtonHandler(){
+function makeListButtonEnabler(){
    var toDoItemsArray = JSON.parse(localStorage.getItem('newToDoItems'));
    console.log(toDoItemsArray.length)
    if (toDoItemsArray.length > 0 && newTaskListTitleInput.value !== '') {
@@ -58,14 +58,14 @@ function newTaskItemHandler(e) {
   var newTask = newToDoItem(newTaskItemInput.value, Date.now());
   apendPotentialItems(newTask.body, newTask.id);
   newTaskItemInput.value = '';
-  makeListButtonHandler();
+  makeListButtonEnabler();
 }
 
 function newTaskListHandler(){
   createNewToDoList();
   clearPotentialItemsArray(); 
   clearDraftingArea();
-  makeListButtonHandler();
+  makeListButtonEnabler();
 }
 
 function clearPotentialItemsArray() {
@@ -118,7 +118,7 @@ function deletePotentialItem(e) {
     var taskIndex = findTaskIndex(e)
     var taskArray = JSON.parse(localStorage.getItem('newToDoItems'))
     reinstantiateTask(e).deleteFromStorage(taskIndex)
-    makeListButtonHandler()
+    makeListButtonEnabler()
     e.target.parentNode.remove();
   }
 }
