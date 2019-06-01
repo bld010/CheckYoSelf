@@ -131,7 +131,8 @@ aside form {
   margin-top: -10px;
 }
 
-
+#aside__clear-all-button:disabled,
+#aside__make-task-list-button:disabled,
 .aside__new-task-button:disabled {
   opacity:0.5;
 }

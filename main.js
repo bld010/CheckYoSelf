@@ -11,6 +11,7 @@ var newTaskForm = document.querySelector('.aside__top-section')
 var taskListArray = []
 
 pageLoadHandler();
+localStorage.setItem('newToDoItems', JSON.stringify([]));
 newTaskItemButton.addEventListener('click', newTaskItemHandler);
 potentialItemList.addEventListener('click', deletePotentialItem);
 newTaskForm.addEventListener('keyup', function(){
@@ -38,15 +39,51 @@ function enableButton(buttonElement, associatedInput) {
   }
 }
 
-function newTaskItemHandler() {
+function newTaskItemHandler(e) {
+  e.preventDefault();
   newToDoItem(newTaskItemInput.value)
   apendPotentialItems(newTaskItemInput.value);
   newTaskItemInput.value = '';
 }
 
+function newTaskListHandler(){
+  createNewToDoList();
+  clearPotentialItemsArray(); 
+  clearDraftingArea();
+}
+
+function clearPotentialItemsArray() {
+  localStorage.setItem('newToDoItems', JSON.stringify([]));
+}
+
+function clearDraftingArea() {
+  potentialItemList.innerHTML = '';
+  newTaskListTitle.value = '';
+  newTaskItemInput.value = '';
+}
+
+reinstantiateLists()
+
+function reinstantiateLists() {
+  var reinstantiatedArray = JSON.parse(localStorage.getItem('taskListArray')).map(function(listObject){
+    return new ToDoList(listObject.id, listObject.title, listObject.tasks)
+  })
+  taskListArray = reinstantiatedArray
+}
+
+function createNewToDoList() {
+  var toDoItemsArray = JSON.parse(localStorage.getItem('newToDoItems'));
+  var newToDoList = new ToDoList(Date.now(), newTaskListTitle.value, toDoItemsArray);
+  taskListArray.push(newToDoList)
+  console.log(taskListArray)
+  newToDoList.saveToStorage()
+}
+
 function newToDoItem(input){
-  var newPotentialItem = new ToDoItem(input)
-  console.log(newPotentialItem);
+  var newPotentialItem = new ToDoItem(input);
+  var newToDoItemsArray = newPotentialItem.getFromStorage();
+  newToDoItemsArray.push(newPotentialItem);
+  newPotentialItem.saveToStorage(newToDoItemsArray);
 }
 
 function apendPotentialItems(input){
@@ -65,3 +102,4 @@ function deletePotentialItem(e) {
     listItemToDelete.parentNode.remove();
   }
 }
+
