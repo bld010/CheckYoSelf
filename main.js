@@ -9,7 +9,8 @@ var filterByUrgencyButton = document.querySelector('#aside__filter-by-urgency-bu
 var potentialItemList = document.querySelector('#aside__potential-items-list');
 var newTaskForm = document.querySelector('.aside__top-section');
 var listTitleInput = document.querySelector('#aside__new-task-list-title-input');
-var taskListContainer = document.querySelector('.section__task-list-container')
+var taskListContainer = document.querySelector('.section__task-list-container');
+var prompt = document.querySelector('.prompt');
 var taskListArray = []
 
 localStorage.setItem('newToDoItems', JSON.stringify([]));
@@ -22,16 +23,30 @@ newTaskForm.addEventListener('keyup', function(){
 listTitleInput.addEventListener('keyup', makeListandClearButtonHandler)
 makeTaskListButton.addEventListener('click', newTaskListHandler)
 clearAllButton.addEventListener('click', clearAllButtonHandler);
+taskListContainer.addEventListener('click', taskListContainerHandler)
+
 reinstantiateLists()
 pageLoadHandler();
 populateCards(taskListArray);
 
+function taskListContainerHandler(e){
+  console.log(e.target)
+  updateCheckedStatus(e)
+}
+
+function updateCheckedStatus(e) {
+  var target = e.target;
+  if (target.classList.contains('checkbox')) {
+    target.classList.toggle('checked');
+    target.closest('li').classList.toggle('checked');
+  }
+}
+
 function noListsPrompt(){
   if (taskListArray.length === 0){
-    var prompt = `<h2 class="prompt">Make a new ToDo List to see it here.</h2>`
-    taskListContainer.insertAdjacentHTML('afterbegin', prompt)
+    prompt.classList.remove('hidden')
   } else {
-    taskListContainer.innerHTML = ''
+    prompt.classList.add('hidden');
   }
 }
 
@@ -98,6 +113,7 @@ function newTaskListHandler(e){
   clearDraftingArea();
   makeListButtonEnabler();
   clearPotentialItemsArray(); 
+  noListsPrompt();
 }
 
 function clearPotentialItemsArray() {
@@ -174,7 +190,7 @@ function createTaskElements(newListObject) {
   var listItems = `<ul>`   
   for (var i = 0; i < newListObject.tasks.length; i++){
     listItems += `<li>
-      <img src="images/checkbox.svg">
+      <img src="images/checkbox.svg" class="checkbox">
       ${newListObject.tasks[i].body}
     </li>`
   }

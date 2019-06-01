@@ -238,7 +238,18 @@ li img {
   width: 20px;
   margin: 0 10px 10px 0;
 }
+/*Checked Item Styles*/
+
+img.checked {
+  content:url('images/checkbox-active.svg');
+}
  
+li.checked {
+  color: #587A8A;
+  font-style: italic;
+
+}
+
 /*Urgent Card Styles*/
 
 .urgent {
@@ -278,4 +289,8 @@ aside ul {
 .aside__potential-items-item img {
   width: 20px;
   height: 20px;
+}
+
+.hidden {
+  display: none;
 }
