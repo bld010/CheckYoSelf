@@ -9,30 +9,49 @@ var filterByUrgencyButton = document.querySelector('#aside__filter-by-urgency-bu
 var potentialItemList = document.querySelector('#aside__potential-items-list');
 var newTaskForm = document.querySelector('.aside__top-section');
 var listTitleInput = document.querySelector('#aside__new-task-list-title-input');
+var taskListContainer = document.querySelector('.section__task-list-container')
 var taskListArray = []
 
 pageLoadHandler();
 localStorage.setItem('newToDoItems', JSON.stringify([]));
+
 newTaskItemButton.addEventListener('click', newTaskItemHandler);
 potentialItemList.addEventListener('click', deletePotentialItem);
 newTaskForm.addEventListener('keyup', function(){
   newTaskButtonHandler(newTaskItemButton, newTaskItemInput)
 })
-listTitleInput.addEventListener('keyup', makeListButtonEnabler)
+listTitleInput.addEventListener('keyup', makeListButtonHandler)
+makeTaskListButton.addEventListener('click', newTaskListHandler)
+clearAllButton.addEventListener('click', clearAllButtonHandler)
 
+function clearAllButtonHandler(e) {
+  e.preventDefault();
+  clearDraftingArea();
+  clearPotentialItemsArray(); 
+  makeListButtonEnabler();
+}
 
 function pageLoadHandler() {
  disableButton(newTaskItemButton, newTaskItemInput);
 }
 
+function makeListButtonHandler(){
+  makeListButtonEnabler()
+  if (newTaskListTitleInput.value !== ''){
+    clearAllButton.disabled = false;
+  }
+}
+
 function makeListButtonEnabler(){
    var toDoItemsArray = JSON.parse(localStorage.getItem('newToDoItems'));
-   console.log(toDoItemsArray.length)
    if (toDoItemsArray.length > 0 && newTaskListTitleInput.value !== '') {
     makeTaskListButton.disabled = false;
+    clearAllButton.disabled = false;
+
    }
    if (toDoItemsArray.length === 0 || newTaskListTitleInput.value === '') {
     makeTaskListButton.disabled = true;
+    clearAllButton.disabled = true;
   }
 }
 
@@ -61,11 +80,12 @@ function newTaskItemHandler(e) {
   makeListButtonEnabler();
 }
 
-function newTaskListHandler(){
+function newTaskListHandler(e){
+  e.preventDefault();
   createNewToDoList();
-  clearPotentialItemsArray(); 
   clearDraftingArea();
   makeListButtonEnabler();
+  clearPotentialItemsArray(); 
 }
 
 function clearPotentialItemsArray() {
@@ -81,10 +101,12 @@ function clearDraftingArea() {
 reinstantiateLists()
 
 function reinstantiateLists() {
-  var reinstantiatedArray = JSON.parse(localStorage.getItem('taskListArray')).map(function(listObject){
-    return new ToDoList(listObject.id, listObject.title, listObject.tasks)
-  })
-  taskListArray = reinstantiatedArray
+  if (JSON.parse(localStorage.getItem('taskListArray')) !== null){
+    var reinstantiatedArray = JSON.parse(localStorage.getItem('taskListArray')).map(function(listObject){
+      return new ToDoList(listObject.id, listObject.title, listObject.tasks)
+    })
+    taskListArray = reinstantiatedArray
+  }
 }
 
 function createNewToDoList() {
@@ -93,6 +115,7 @@ function createNewToDoList() {
   taskListArray.push(newToDoList)
   console.log(taskListArray)
   newToDoList.saveToStorage()
+  generateCard(newToDoList);
 }
 
 function newToDoItem(input, id){
@@ -137,4 +160,45 @@ function findTaskIndex(e) {
   });
 }
 
+function createTaskElements(newListObject) {
+  var listItems = `<ul>`   
+  for (var i = 0; i < newListObject.tasks.length; i++){
+    listItems += `<li>
+      <img src="images/checkbox.svg">
+      ${newListObject.tasks[i].body}
+    </li>`
+  }
+  return listItems
+}
 
+function generateCard(newListObject) {
+  var listItems = createTaskElements(newListObject);
+  var newList = `
+    <article data-id='${newListObject.id}'>
+      <h2>${newListObject.title}</h2>
+      <main>
+        ${listItems}
+        </ul>
+      </main>
+      <footer>
+        <div id="card__footer-urgent-button">
+          <img src="images/urgent.svg">
+          <p>Urgent</p>
+        </div>
+        <div class="card__footer-delete-button">
+          <img src="images/delete.svg">
+          <p>Delete</p>
+        </div>
+      </footer>
+    </article>
+  `
+  taskListContainer.insertAdjacentHTML('afterbegin', newList)
+}
+
+populateCards(taskListArray)
+
+function populateCards(array) {
+  for (var i = 0; i < array.length; i++) {
+    generateCard(array[i]);
+  }
+}
