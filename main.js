@@ -1,13 +1,14 @@
 var searchButton = document.querySelector('#header__search-button');
 var searchInput = document.querySelector('#header__search-input');
-var newTaskListTitle = document.querySelector('#aside__new-task-list-title-input')
+var newTaskListTitleInput = document.querySelector('#aside__new-task-list-title-input')
 var newTaskItemInput = document.querySelector('#aside__new-task-input')
 var newTaskItemButton = document.querySelector('.aside__new-task-button');
 var makeTaskListButton = document.querySelector('#aside__make-task-list-button');
 var clearAllButton = document.querySelector('#aside__clear-all-button');
 var filterByUrgencyButton = document.querySelector('#aside__filter-by-urgency-button');
 var potentialItemList = document.querySelector('#aside__potential-items-list');
-var newTaskForm = document.querySelector('.aside__top-section')
+var newTaskForm = document.querySelector('.aside__top-section');
+var newTaskListForm = document.querySelector('#aside__new-task-list-title-input');
 var taskListArray = []
 
 pageLoadHandler();
@@ -17,10 +18,23 @@ potentialItemList.addEventListener('click', deletePotentialItem);
 newTaskForm.addEventListener('keyup', function(){
   newTaskButtonHandler(newTaskItemButton, newTaskItemInput)
 })
+newTaskListForm.addEventListener('keyup', newTaskListButtonHandler)
+
 
 function pageLoadHandler() {
  disableButton(newTaskItemButton, newTaskItemInput);
 }
+
+function newTaskListButtonHandler(){
+   var toDoItemsArray = JSON.parse(localStorage.getItem('newToDoItems'));
+   console.log(toDoItemsArray)
+   if (toDoItemsArray.length > 0) {
+    enableButton(makeTaskListButton, newTaskListTitleInput)
+   } else {
+    disableButton(makeTaskListButton, newTaskListTitleInput);
+    }
+}
+
 
 function newTaskButtonHandler() {
   disableButton(newTaskItemButton, newTaskItemInput);
@@ -58,7 +72,7 @@ function clearPotentialItemsArray() {
 
 function clearDraftingArea() {
   potentialItemList.innerHTML = '';
-  newTaskListTitle.value = '';
+  newTaskListTitleInput.value = '';
   newTaskItemInput.value = '';
 }
 
@@ -73,7 +87,7 @@ function reinstantiateLists() {
 
 function createNewToDoList() {
   var toDoItemsArray = JSON.parse(localStorage.getItem('newToDoItems'));
-  var newToDoList = new ToDoList(Date.now(), newTaskListTitle.value, toDoItemsArray);
+  var newToDoList = new ToDoList(Date.now(), newTaskListTitleInput.value, toDoItemsArray);
   taskListArray.push(newToDoList)
   console.log(taskListArray)
   newToDoList.saveToStorage()
