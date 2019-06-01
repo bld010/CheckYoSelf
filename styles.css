@@ -89,7 +89,7 @@ aside input {
 
 .aside__new-task-input {
   width: 90%;
-  border-radius: 2.5 0 0 2.5px;
+  border-radius: 2.5px 0 0 2.5px;
   margin-right: -2px;
 }
 
@@ -122,7 +122,18 @@ aside form {
   background-color: blue;
   background-color: #1F1F3D;
   border-radius: 0 2.5px 2.5px 0;
-  padding: 10px;
+  /*padding: 10px;*/
+}
+
+.aside__new-task-button p {
+  font-size: 50px;
+  font-weight: 400;
+  margin-top: -10px;
+}
+
+
+.aside__new-task-button:disabled {
+  opacity:0.5;
 }
 
 .aside__filter-section {

@@ -7,15 +7,41 @@ var makeTaskListButton = document.querySelector('#aside__make-task-list-button')
 var clearAllButton = document.querySelector('#aside__clear-all-button');
 var filterByUrgencyButton = document.querySelector('#aside__filter-by-urgency-button');
 var potentialItemList = document.querySelector('#aside__potential-items-list');
+var newTaskForm = document.querySelector('.aside__top-section')
 var taskListArray = []
 
-
+pageLoadHandler();
 newTaskItemButton.addEventListener('click', newTaskItemHandler);
 potentialItemList.addEventListener('click', deletePotentialItem);
+newTaskForm.addEventListener('keyup', function(){
+  newTaskButtonHandler(newTaskItemButton, newTaskItemInput)
+})
+
+function pageLoadHandler() {
+ disableButton(newTaskItemButton, newTaskItemInput);
+}
+
+function newTaskButtonHandler() {
+  disableButton(newTaskItemButton, newTaskItemInput);
+  enableButton(newTaskItemButton, newTaskItemInput);
+}
+
+function disableButton(buttonElement, associatedInput) {
+  if (associatedInput.value === '') {
+    buttonElement.disabled = true;
+  }
+}
+
+function enableButton(buttonElement, associatedInput) {
+  if (associatedInput.value !== '') {
+    buttonElement.disabled = false;
+  }
+}
 
 function newTaskItemHandler() {
   newToDoItem(newTaskItemInput.value)
   apendPotentialItems(newTaskItemInput.value);
+  newTaskItemInput.value = '';
 }
 
 function newToDoItem(input){
