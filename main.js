@@ -12,7 +12,6 @@ var listTitleInput = document.querySelector('#aside__new-task-list-title-input')
 var taskListContainer = document.querySelector('.section__task-list-container')
 var taskListArray = []
 
-pageLoadHandler();
 localStorage.setItem('newToDoItems', JSON.stringify([]));
 
 newTaskItemButton.addEventListener('click', newTaskItemHandler);
@@ -20,9 +19,21 @@ potentialItemList.addEventListener('click', deletePotentialItem);
 newTaskForm.addEventListener('keyup', function(){
   newTaskButtonHandler(newTaskItemButton, newTaskItemInput)
 })
-listTitleInput.addEventListener('keyup', makeListButtonHandler)
+listTitleInput.addEventListener('keyup', makeListandClearButtonHandler)
 makeTaskListButton.addEventListener('click', newTaskListHandler)
-clearAllButton.addEventListener('click', clearAllButtonHandler)
+clearAllButton.addEventListener('click', clearAllButtonHandler);
+reinstantiateLists()
+pageLoadHandler();
+populateCards(taskListArray);
+
+function noListsPrompt(){
+  if (taskListArray.length === 0){
+    var prompt = `<h2 class="prompt">Make a new ToDo List to see it here.</h2>`
+    taskListContainer.insertAdjacentHTML('afterbegin', prompt)
+  } else {
+    taskListContainer.innerHTML = ''
+  }
+}
 
 function clearAllButtonHandler(e) {
   e.preventDefault();
@@ -33,9 +44,10 @@ function clearAllButtonHandler(e) {
 
 function pageLoadHandler() {
  disableButton(newTaskItemButton, newTaskItemInput);
+ noListsPrompt();
 }
 
-function makeListButtonHandler(){
+function makeListandClearButtonHandler(){
   makeListButtonEnabler()
   if (newTaskListTitleInput.value !== ''){
     clearAllButton.disabled = false;
@@ -97,8 +109,6 @@ function clearDraftingArea() {
   newTaskListTitleInput.value = '';
   newTaskItemInput.value = '';
 }
-
-reinstantiateLists()
 
 function reinstantiateLists() {
   if (JSON.parse(localStorage.getItem('taskListArray')) !== null){
@@ -168,6 +178,7 @@ function createTaskElements(newListObject) {
       ${newListObject.tasks[i].body}
     </li>`
   }
+  console.log(listItems)
   return listItems
 }
 
@@ -194,8 +205,6 @@ function generateCard(newListObject) {
   `
   taskListContainer.insertAdjacentHTML('afterbegin', newList)
 }
-
-populateCards(taskListArray)
 
 function populateCards(array) {
   for (var i = 0; i < array.length; i++) {

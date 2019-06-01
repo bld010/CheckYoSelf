@@ -46,5 +46,3 @@ class ToDoItem {
     this.saveToStorage(toDoArray);
   }
 }
-
-// localStorage.setItem('toDoItems', JSON.stringify(ideasArray));
