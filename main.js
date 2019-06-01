@@ -8,7 +8,7 @@ var clearAllButton = document.querySelector('#aside__clear-all-button');
 var filterByUrgencyButton = document.querySelector('#aside__filter-by-urgency-button');
 var potentialItemList = document.querySelector('#aside__potential-items-list');
 var newTaskForm = document.querySelector('.aside__top-section');
-var newTaskListForm = document.querySelector('#aside__new-task-list-title-input');
+var listTitleInput = document.querySelector('#aside__new-task-list-title-input');
 var taskListArray = []
 
 pageLoadHandler();
@@ -18,23 +18,23 @@ potentialItemList.addEventListener('click', deletePotentialItem);
 newTaskForm.addEventListener('keyup', function(){
   newTaskButtonHandler(newTaskItemButton, newTaskItemInput)
 })
-newTaskListForm.addEventListener('keyup', newTaskListButtonHandler)
+listTitleInput.addEventListener('keyup', makeListButtonHandler)
 
 
 function pageLoadHandler() {
  disableButton(newTaskItemButton, newTaskItemInput);
 }
 
-function newTaskListButtonHandler(){
+function makeListButtonHandler(){
    var toDoItemsArray = JSON.parse(localStorage.getItem('newToDoItems'));
-   console.log(toDoItemsArray)
-   if (toDoItemsArray.length > 0) {
-    enableButton(makeTaskListButton, newTaskListTitleInput)
-   } else {
-    disableButton(makeTaskListButton, newTaskListTitleInput);
-    }
+   console.log(toDoItemsArray.length)
+   if (toDoItemsArray.length > 0 && newTaskListTitleInput.value !== '') {
+    makeTaskListButton.disabled = false;
+   }
+   if (toDoItemsArray.length === 0 || newTaskListTitleInput.value === '') {
+    makeTaskListButton.disabled = true;
+  }
 }
-
 
 function newTaskButtonHandler() {
   disableButton(newTaskItemButton, newTaskItemInput);
@@ -55,15 +55,17 @@ function enableButton(buttonElement, associatedInput) {
 
 function newTaskItemHandler(e) {
   e.preventDefault();
-  newToDoItem(newTaskItemInput.value)
-  apendPotentialItems(newTaskItemInput.value);
+  var newTask = newToDoItem(newTaskItemInput.value, Date.now());
+  apendPotentialItems(newTask.body, newTask.id);
   newTaskItemInput.value = '';
+  makeListButtonHandler();
 }
 
 function newTaskListHandler(){
   createNewToDoList();
   clearPotentialItemsArray(); 
   clearDraftingArea();
+  makeListButtonHandler();
 }
 
 function clearPotentialItemsArray() {
@@ -93,27 +95,46 @@ function createNewToDoList() {
   newToDoList.saveToStorage()
 }
 
-function newToDoItem(input){
-  var newPotentialItem = new ToDoItem(input);
+function newToDoItem(input, id){
+  var newPotentialItem = new ToDoItem(input, id);
   var newToDoItemsArray = newPotentialItem.getFromStorage();
   newToDoItemsArray.push(newPotentialItem);
   newPotentialItem.saveToStorage(newToDoItemsArray);
+  return newPotentialItem
 }
 
-function apendPotentialItems(input){
+function apendPotentialItems(input, id){
   var newPotentialItem = `
   <li class="aside__potential-items-item">
-    <img src="images/delete-list-item.svg" class="delete-list-item">
+    <img src="images/delete-list-item.svg" data-id='${id}' class="delete-list-item">
     ${input}
   </li>`
   potentialItemList.insertAdjacentHTML('beforeend',newPotentialItem)
 }
 
 function deletePotentialItem(e) {
-  console.log(e.target.classList)
-  if (e.target.classList.contains("delete-list-item")) {
-    var listItemToDelete = e.target;
-    listItemToDelete.parentNode.remove();
+  console.log(e.target.closest('li').innerText)
+  if (e.target.classList.contains('delete-list-item')) {
+    var taskIndex = findTaskIndex(e)
+    var taskArray = JSON.parse(localStorage.getItem('newToDoItems'))
+    reinstantiateTask(e).deleteFromStorage(taskIndex)
+    makeListButtonHandler()
+    e.target.parentNode.remove();
   }
 }
+
+function reinstantiateTask(e) {
+  var taskInstance = new ToDoItem(e.target.closest('li').innerText, e.target.getAttribute('data-id'));
+  return taskInstance
+}
+
+function findTaskIndex(e) {
+  var taskId = e.target.getAttribute('data-id');
+  var newToDoItemsArray = JSON.parse(localStorage.getItem('newToDoItems'));
+  console.log(newToDoItemsArray)
+  return newToDoItemsArray.findIndex(function(taskObj){
+    return taskObj.id == parseInt(taskId);
+  });
+}
+
 
