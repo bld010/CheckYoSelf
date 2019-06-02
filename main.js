@@ -31,13 +31,39 @@ populateCards(taskListArray);
 
 function taskListContainerHandler(e){
   checkedTaskHandler(e);
-  deleteCardHandler(e)
+  deleteCardHandler(e);
+  markUrgentHandler(e);
+}
+
+function markUrgentHandler(e){
+  if (e.target.classList.contains('urgent_button')){
+  updateUrgencyOnDOM(e);
+  taskListArray[getListIndex(e)].updateToDo()
+  reinstantiateLists();
+}
+
+}
+
+function updateUrgencyOnDOM(e) {
+    e.target.closest('article').classList.toggle('urgent');
+}
+
+function deleteButtonEnabler(e) {
+  var deleteButton = e.target.closest('article').querySelector('.card__footer-delete-button')
+  var tasksArray = taskListArray[getListIndex(e)].tasks;
+  var notChecked = tasksArray.find(function(taskItem){
+    return taskItem.checked === false;
+  })
+  if (notChecked === undefined) {
+    deleteButton.disabled = false;
+  } else {
+    deleteButton.disabled = true;
+  }
 }
 
 function deleteCardHandler(e){
-  
-  deleteCardFromDOM(e);
-  if (e.target.classList.contains('delete')){
+  if (e.target.classList.contains('delete') && e.target.closest('article').querySelector('.card__footer-delete-button').disabled !== true) {
+    deleteCardFromDOM(e);
     var listIndex = getListIndex(e);
     taskListArray[listIndex].deleteFromStorage(listIndex);
     taskListArray.splice(listIndex, 1); 
@@ -45,15 +71,14 @@ function deleteCardHandler(e){
 }
 
 function deleteCardFromDOM(e){
-  if (e.target.classList.contains('delete')) {
     e.target.closest('article').remove()
-  }
 }
 
 function checkedTaskHandler(e) {
   if (e.target.classList.contains('checkbox')){
   updateCheckedStyles(e);
   findEditedTaskIndex(e);
+  deleteButtonEnabler(e);
   } 
 }
 
@@ -67,7 +92,6 @@ function getListIndex(e) {
 function findEditedTaskIndex(e) {
   var listIndex = getListIndex(e)
   var listObjTasks = taskListArray[listIndex].tasks
-  console.log(listObjTasks)
   var taskId = parseInt(e.target.closest('li').getAttribute('data-id'));
   var itemIndex = listObjTasks.findIndex(function(itemObj){ 
     return itemObj.id === taskId
@@ -170,7 +194,7 @@ function clearDraftingArea() {
 function reinstantiateLists() {
   if (JSON.parse(localStorage.getItem('taskListArray')) !== null){
     var reinstantiatedArray = JSON.parse(localStorage.getItem('taskListArray')).map(function(listObject){
-      return new ToDoList(listObject.id, listObject.title, listObject.tasks)
+      return new ToDoList(listObject.id, listObject.title, listObject.tasks, listObject.urgent)
     })
     taskListArray = reinstantiatedArray
   }
@@ -244,26 +268,46 @@ function createTaskElements(newListObject) {
 
 function generateCard(newListObject) {
   var listItems = createTaskElements(newListObject);
+  var deleteButton = createDeleteButtonElement(newListObject);
+  var urgency = cardUrgency(newListObject);
+  console.log(urgency)
   var newList = `
-    <article data-id='${newListObject.id}'>
+    <article data-id="${newListObject.id}" class="${urgency}">
       <h2>${newListObject.title}</h2>
       <main>
         ${listItems}
         </ul>
       </main>
       <footer>
-        <div id="card__footer-urgent-button" class="delete">
-          <img src="images/urgent.svg">
-          <p>Urgent</p>
-        </div>
-        <div class="card__footer-delete-button" class="delete">
+        <button id="card__footer-urgent-button" class="delete urgent_button">
+          <img src="images/urgent.svg" class="urgent_button .card__footer-urgent-button-image">
+          <p class="urgent_button">Urgent</p>
+        </button>
+        <button class="card__footer-delete-button" class="delete" ${deleteButton}>
           <img src="images/delete.svg" class="delete">
-          <p class="delete">Delete</p>
-        </div>
+          <p class="delete" >Delete</p>
+        </button>
       </footer>
     </article>
   `
-  taskListContainer.insertAdjacentHTML('afterbegin', newList)
+  taskListContainer.insertAdjacentHTML('afterbegin', newList);
+}
+
+function createDeleteButtonElement(newListObject){
+  var notChecked = newListObject.tasks.find(function(taskItem){
+    return taskItem.checked === false;
+  }) 
+    if (notChecked === undefined) {
+      return '';
+    } else {
+      return 'disabled';
+    }
+}
+
+function cardUrgency(newListObject) {
+  if (newListObject.urgent) {
+    return 'urgent'
+  }
 }
 
 function populateCards(array) {
