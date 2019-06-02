@@ -280,8 +280,8 @@ function generateCard(newListObject) {
       </main>
       <footer>
         <button id="card__footer-urgent-button" class="delete urgent_button">
-          <img src="images/urgent.svg" class="urgent_button .card__footer-urgent-button-image">
-          <p class="urgent_button">Urgent</p>
+          <img src="images/urgent.svg" class="urgent_button card__footer-urgent-button-image">
+          <p class="urgent_button card__urgent_button_text">Urgent</p>
         </button>
         <button class="card__footer-delete-button" class="delete" ${deleteButton}>
           <img src="images/delete.svg" class="delete">
