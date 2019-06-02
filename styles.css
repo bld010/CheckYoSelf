@@ -133,7 +133,8 @@ aside form {
 
 #aside__clear-all-button:disabled,
 #aside__make-task-list-button:disabled,
-.aside__new-task-button:disabled {
+.aside__new-task-button:disabled,
+:disabled {
   opacity:0.5;
 }
 
@@ -173,6 +174,7 @@ article {
   height: auto;
   columns: 2 250px;
   column-gap: 30px;
+  background-color: #F3F6F7;
 }
 
 article h2 {
@@ -204,6 +206,11 @@ article footer {
   height: 50px;
   justify-content: space-between;
   align-items: flex-end;
+}
+
+article button {
+  background-color: #FAFDFF;
+  border: none;
 }
 
 footer div {
@@ -265,7 +272,7 @@ li.checked {
   border-bottom: 2px solid #FFC30C;
 }
 
-.urgent img.card__footer-urgent-button-image {
+.urgent img.urgent_button {
   content: url('images/urgent-active.svg');
 } 
 
@@ -273,6 +280,9 @@ li.checked {
   color: #B23A25;
 }
 
+.urgent button {
+  background-color: #FFE89D;
+}
 
 /*Potential Items Styles*/
 

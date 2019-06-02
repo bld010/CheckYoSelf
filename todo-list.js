@@ -1,8 +1,8 @@
 class ToDoList {
-  constructor(id, title, tasksArray){
+  constructor(id, title, tasksArray, urgency){
     this.id = id
     this.title = title
-    this.urgent = false;
+    this.urgent = urgency || false;
     this.tasks = tasksArray || [];
   }
 
@@ -12,20 +12,18 @@ class ToDoList {
 
   deleteFromStorage(index){
     var arrayList = JSON.parse(localStorage.getItem('taskListArray'));
-    console.log(index);
     arrayList.splice(index, 1);
     localStorage.setItem('taskListArray', JSON.stringify(arrayList))
-
   }
 
   updateToDo(){
-
+    this.urgent = !this.urgent;
+    this.saveToStorage();
   }
 
   updateTask(taskIndex){
     this.tasks[taskIndex].checked = !this.tasks[taskIndex].checked;
     this.saveToStorage();
-    console.log('classupdater')
   }
 }
 
