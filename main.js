@@ -40,12 +40,16 @@ function toggleFilterStatus() {
 }
 
 function populateFilterCards(){
-    if (filterByUrgencyButton.clicked === true && generateFilterArray()){
+    if (filterByUrgencyButton.clicked === true){
     var filterArray = generateFilterArray();
     populateCards(filterArray)
-  } else {
+  }
+   else {
     populateCards(taskListArray)
   }
+    if (filterByUrgencyButton.clicked === true && generateFilterArray().length === 0) {
+    taskListContainer.innerHTML = '<h2>No urgent lists</h2>'
+    }
 }
 
 function filterByUrgencyHandler(){
