@@ -10,7 +10,11 @@ class ToDoList {
     localStorage.setItem('taskListArray', JSON.stringify(taskListArray));
   }
 
-  deleteFromStorage(){
+  deleteFromStorage(index){
+    var arrayList = JSON.parse(localStorage.getItem('taskListArray'));
+    console.log(index);
+    arrayList.splice(index, 1);
+    localStorage.setItem('taskListArray', JSON.stringify(arrayList))
 
   }
 

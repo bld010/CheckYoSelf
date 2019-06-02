@@ -31,11 +31,30 @@ populateCards(taskListArray);
 
 function taskListContainerHandler(e){
   checkedTaskHandler(e);
+  deleteCardHandler(e)
+}
+
+function deleteCardHandler(e){
+  
+  deleteCardFromDOM(e);
+  if (e.target.classList.contains('delete')){
+    var listIndex = getListIndex(e);
+    taskListArray[listIndex].deleteFromStorage(listIndex);
+    taskListArray.splice(listIndex, 1); 
+  }
+}
+
+function deleteCardFromDOM(e){
+  if (e.target.classList.contains('delete')) {
+    e.target.closest('article').remove()
+  }
 }
 
 function checkedTaskHandler(e) {
+  if (e.target.classList.contains('checkbox')){
   updateCheckedStyles(e);
   findEditedTaskIndex(e);
+  } 
 }
 
 function getListIndex(e) {
@@ -47,22 +66,14 @@ function getListIndex(e) {
 
 function findEditedTaskIndex(e) {
   var listIndex = getListIndex(e)
-  var listObj = taskListArray[listIndex]
-  console.log(listObj.tasks)
-  console.log(e.target.closest('li').getAttribute('data-id'))
-  var itemIndex = listObj.tasks.findIndex(function(itemObj){ 
-    return itemObj.id === parseInt(e.target.closest('li').getAttribute('data-id'))
+  var listObjTasks = taskListArray[listIndex].tasks
+  console.log(listObjTasks)
+  var taskId = parseInt(e.target.closest('li').getAttribute('data-id'));
+  var itemIndex = listObjTasks.findIndex(function(itemObj){ 
+    return itemObj.id === taskId
   })
   taskListArray[listIndex].updateTask(itemIndex)
-  console.log(itemIndex)
 }
-
-// function changeCheckedStatus(globalArrayIndex, taskItemIndex) {
-//   taskListArray[globalArrayIndex].tasks[taskItemIndex].checked = true;
-//   console.log(taskListArray[globalArrayIndex].tasks[taskItemIndex].checked)
-//   taskListArray[globalArrayIndex].saveToStorage()
-// }
-
 
 function updateCheckedStyles(e) {
   var target = e.target;
@@ -241,13 +252,13 @@ function generateCard(newListObject) {
         </ul>
       </main>
       <footer>
-        <div id="card__footer-urgent-button">
+        <div id="card__footer-urgent-button" class="delete">
           <img src="images/urgent.svg">
           <p>Urgent</p>
         </div>
-        <div class="card__footer-delete-button">
-          <img src="images/delete.svg">
-          <p>Delete</p>
+        <div class="card__footer-delete-button" class="delete">
+          <img src="images/delete.svg" class="delete">
+          <p class="delete">Delete</p>
         </div>
       </footer>
     </article>
