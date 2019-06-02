@@ -40,7 +40,7 @@ function toggleFilterStatus() {
 }
 
 function populateFilterCards(){
-    if (filterByUrgencyButton.clicked && generateFilterArray()){
+    if (filterByUrgencyButton.clicked === true && generateFilterArray()){
     var filterArray = generateFilterArray();
     populateCards(filterArray)
   } else {
