@@ -40,12 +40,16 @@ function toggleFilterStatus() {
 }
 
 function populateFilterCards(){
-    if (filterByUrgencyButton.clicked && generateFilterArray()){
+    if (filterByUrgencyButton.clicked === true){
     var filterArray = generateFilterArray();
     populateCards(filterArray)
-  } else {
+  }
+   else {
     populateCards(taskListArray)
   }
+    if (filterByUrgencyButton.clicked === true && generateFilterArray().length === 0) {
+    taskListContainer.innerHTML = '<h2>No urgent lists</h2>'
+    }
 }
 
 function filterByUrgencyHandler(){
@@ -329,7 +333,7 @@ function generateCard(newListObject) {
         </ul>
       </main>
       <footer>
-        <button id="card__footer-urgent-button" class="delete urgent_button">
+        <button id="card__footer-urgent-button" class="urgent_button">
           <img src="images/urgent.svg" class="urgent_button card__footer-urgent-button-image">
           <p class="urgent_button card__urgent_button_text">Urgent</p>
         </button>
