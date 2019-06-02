@@ -23,11 +23,47 @@ newTaskForm.addEventListener('keyup', function(){
 listTitleInput.addEventListener('keyup', makeListandClearButtonHandler)
 makeTaskListButton.addEventListener('click', newTaskListHandler)
 clearAllButton.addEventListener('click', clearAllButtonHandler);
-taskListContainer.addEventListener('click', taskListContainerHandler)
+taskListContainer.addEventListener('click', taskListContainerHandler);
+searchInput.addEventListener('keyup', searchHandler);
+filterByUrgencyButton.addEventListener('click', filterByUrgencyHandler);
 
 reinstantiateLists()
 pageLoadHandler();
 populateCards(taskListArray);
+
+function filterByUrgencyHandler(){
+  filterByUrgencyButton.clicked = !filterByUrgencyButton.clicked
+    taskListContainer.innerHTML = ''
+  if (filterByUrgencyButton.clicked && generateFilterArray()){
+    var filterArray = generateFilterArray();
+    populateCards(filterArray)
+  } else {
+    populateCards(taskListArray)
+  }
+}
+
+function generateFilterArray(){
+  var filterArray = taskListArray.filter(function(arrayObject){
+    return arrayObject.urgent === true;
+  })
+  return filterArray;
+}
+
+
+function searchHandler(){
+  taskListContainer.innerHTML = '';
+  populateCards(generateSearchArray(taskListArray, searchInput.value))
+  if (generateSearchArray(taskListArray, searchInput.value).length === 0) {
+    taskListContainer.innerHTML = '<h2>No Lists Match Your Search</h2>'
+  }
+}
+
+function generateSearchArray(array, searchWords){
+  var searchArray = array.filter(function(arrayObject){
+    return arrayObject.title.toLowerCase().includes(searchWords.toLowerCase()) === true;
+  })
+  return searchArray;
+}
 
 function taskListContainerHandler(e){
   checkedTaskHandler(e);
@@ -40,8 +76,7 @@ function markUrgentHandler(e){
   updateUrgencyOnDOM(e);
   taskListArray[getListIndex(e)].updateToDo()
   reinstantiateLists();
-}
-
+  }
 }
 
 function updateUrgencyOnDOM(e) {
@@ -270,7 +305,6 @@ function generateCard(newListObject) {
   var listItems = createTaskElements(newListObject);
   var deleteButton = createDeleteButtonElement(newListObject);
   var urgency = cardUrgency(newListObject);
-  console.log(urgency)
   var newList = `
     <article data-id="${newListObject.id}" class="${urgency}">
       <h2>${newListObject.title}</h2>
