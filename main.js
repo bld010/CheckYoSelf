@@ -30,11 +30,41 @@ pageLoadHandler();
 populateCards(taskListArray);
 
 function taskListContainerHandler(e){
-  console.log(e.target)
-  updateCheckedStatus(e)
+  checkedTaskHandler(e);
 }
 
-function updateCheckedStatus(e) {
+function checkedTaskHandler(e) {
+  updateCheckedStyles(e);
+  findEditedTaskIndex(e);
+}
+
+function getListIndex(e) {
+  var cardId = e.target.closest('article').getAttribute('data-id')
+  return listIndex = taskListArray.findIndex(function(taskObj){
+    return taskObj.id == parseInt(cardId)
+  })
+}
+
+function findEditedTaskIndex(e) {
+  var listIndex = getListIndex(e)
+  var listObj = taskListArray[listIndex]
+  console.log(listObj.tasks)
+  console.log(e.target.closest('li').getAttribute('data-id'))
+  var itemIndex = listObj.tasks.findIndex(function(itemObj){ 
+    return itemObj.id === parseInt(e.target.closest('li').getAttribute('data-id'))
+  })
+  taskListArray[listIndex].updateTask(itemIndex)
+  console.log(itemIndex)
+}
+
+// function changeCheckedStatus(globalArrayIndex, taskItemIndex) {
+//   taskListArray[globalArrayIndex].tasks[taskItemIndex].checked = true;
+//   console.log(taskListArray[globalArrayIndex].tasks[taskItemIndex].checked)
+//   taskListArray[globalArrayIndex].saveToStorage()
+// }
+
+
+function updateCheckedStyles(e) {
   var target = e.target;
   if (target.classList.contains('checkbox')) {
     target.classList.toggle('checked');
@@ -139,7 +169,6 @@ function createNewToDoList() {
   var toDoItemsArray = JSON.parse(localStorage.getItem('newToDoItems'));
   var newToDoList = new ToDoList(Date.now(), newTaskListTitleInput.value, toDoItemsArray);
   taskListArray.push(newToDoList)
-  console.log(taskListArray)
   newToDoList.saveToStorage()
   generateCard(newToDoList);
 }
@@ -162,7 +191,6 @@ function apendPotentialItems(input, id){
 }
 
 function deletePotentialItem(e) {
-  console.log(e.target.closest('li').innerText)
   if (e.target.classList.contains('delete-list-item')) {
     var taskIndex = findTaskIndex(e)
     var taskArray = JSON.parse(localStorage.getItem('newToDoItems'))
@@ -180,7 +208,6 @@ function reinstantiateTask(e) {
 function findTaskIndex(e) {
   var taskId = e.target.getAttribute('data-id');
   var newToDoItemsArray = JSON.parse(localStorage.getItem('newToDoItems'));
-  console.log(newToDoItemsArray)
   return newToDoItemsArray.findIndex(function(taskObj){
     return taskObj.id == parseInt(taskId);
   });
@@ -189,12 +216,18 @@ function findTaskIndex(e) {
 function createTaskElements(newListObject) {
   var listItems = `<ul>`   
   for (var i = 0; i < newListObject.tasks.length; i++){
-    listItems += `<li>
-      <img src="images/checkbox.svg" class="checkbox">
+    if (newListObject.tasks[i].checked === true) {
+      listItems += `<li data-id="${newListObject.tasks[i].id}" class="checked">
+      <img src="images/checkbox.svg" class="checkbox checked" >
       ${newListObject.tasks[i].body}
     </li>`
+    } else {
+      listItems += `<li data-id="${newListObject.tasks[i].id}">
+        <img src="images/checkbox.svg" class="checkbox" >
+        ${newListObject.tasks[i].body}
+      </li>`
+    }
   }
-  console.log(listItems)
   return listItems
 }
 
