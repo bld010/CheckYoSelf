@@ -9,7 +9,8 @@ var filterByUrgencyButton = document.querySelector('#aside__filter-by-urgency-bu
 var potentialItemList = document.querySelector('#aside__potential-items-list');
 var newTaskForm = document.querySelector('.aside__top-section');
 var listTitleInput = document.querySelector('#aside__new-task-list-title-input');
-var taskListContainer = document.querySelector('.section__task-list-container')
+var taskListContainer = document.querySelector('.section__task-list-container');
+var prompt = document.querySelector('.prompt');
 var taskListArray = []
 
 localStorage.setItem('newToDoItems', JSON.stringify([]));
@@ -22,16 +23,60 @@ newTaskForm.addEventListener('keyup', function(){
 listTitleInput.addEventListener('keyup', makeListandClearButtonHandler)
 makeTaskListButton.addEventListener('click', newTaskListHandler)
 clearAllButton.addEventListener('click', clearAllButtonHandler);
+taskListContainer.addEventListener('click', taskListContainerHandler)
+
 reinstantiateLists()
 pageLoadHandler();
 populateCards(taskListArray);
 
+function taskListContainerHandler(e){
+  checkedTaskHandler(e);
+}
+
+function checkedTaskHandler(e) {
+  updateCheckedStyles(e);
+  findEditedTaskIndex(e);
+}
+
+function getListIndex(e) {
+  var cardId = e.target.closest('article').getAttribute('data-id')
+  return listIndex = taskListArray.findIndex(function(taskObj){
+    return taskObj.id == parseInt(cardId)
+  })
+}
+
+function findEditedTaskIndex(e) {
+  var listIndex = getListIndex(e)
+  var listObj = taskListArray[listIndex]
+  console.log(listObj.tasks)
+  console.log(e.target.closest('li').getAttribute('data-id'))
+  var itemIndex = listObj.tasks.findIndex(function(itemObj){ 
+    return itemObj.id === parseInt(e.target.closest('li').getAttribute('data-id'))
+  })
+  taskListArray[listIndex].updateTask(itemIndex)
+  console.log(itemIndex)
+}
+
+// function changeCheckedStatus(globalArrayIndex, taskItemIndex) {
+//   taskListArray[globalArrayIndex].tasks[taskItemIndex].checked = true;
+//   console.log(taskListArray[globalArrayIndex].tasks[taskItemIndex].checked)
+//   taskListArray[globalArrayIndex].saveToStorage()
+// }
+
+
+function updateCheckedStyles(e) {
+  var target = e.target;
+  if (target.classList.contains('checkbox')) {
+    target.classList.toggle('checked');
+    target.closest('li').classList.toggle('checked');
+  }
+}
+
 function noListsPrompt(){
   if (taskListArray.length === 0){
-    var prompt = `<h2 class="prompt">Make a new ToDo List to see it here.</h2>`
-    taskListContainer.insertAdjacentHTML('afterbegin', prompt)
+    prompt.classList.remove('hidden')
   } else {
-    taskListContainer.innerHTML = ''
+    prompt.classList.add('hidden');
   }
 }
 
@@ -98,6 +143,7 @@ function newTaskListHandler(e){
   clearDraftingArea();
   makeListButtonEnabler();
   clearPotentialItemsArray(); 
+  noListsPrompt();
 }
 
 function clearPotentialItemsArray() {
@@ -123,7 +169,6 @@ function createNewToDoList() {
   var toDoItemsArray = JSON.parse(localStorage.getItem('newToDoItems'));
   var newToDoList = new ToDoList(Date.now(), newTaskListTitleInput.value, toDoItemsArray);
   taskListArray.push(newToDoList)
-  console.log(taskListArray)
   newToDoList.saveToStorage()
   generateCard(newToDoList);
 }
@@ -146,7 +191,6 @@ function apendPotentialItems(input, id){
 }
 
 function deletePotentialItem(e) {
-  console.log(e.target.closest('li').innerText)
   if (e.target.classList.contains('delete-list-item')) {
     var taskIndex = findTaskIndex(e)
     var taskArray = JSON.parse(localStorage.getItem('newToDoItems'))
@@ -164,7 +208,6 @@ function reinstantiateTask(e) {
 function findTaskIndex(e) {
   var taskId = e.target.getAttribute('data-id');
   var newToDoItemsArray = JSON.parse(localStorage.getItem('newToDoItems'));
-  console.log(newToDoItemsArray)
   return newToDoItemsArray.findIndex(function(taskObj){
     return taskObj.id == parseInt(taskId);
   });
@@ -173,12 +216,18 @@ function findTaskIndex(e) {
 function createTaskElements(newListObject) {
   var listItems = `<ul>`   
   for (var i = 0; i < newListObject.tasks.length; i++){
-    listItems += `<li>
-      <img src="images/checkbox.svg">
+    if (newListObject.tasks[i].checked === true) {
+      listItems += `<li data-id="${newListObject.tasks[i].id}" class="checked">
+      <img src="images/checkbox.svg" class="checkbox checked" >
       ${newListObject.tasks[i].body}
     </li>`
+    } else {
+      listItems += `<li data-id="${newListObject.tasks[i].id}">
+        <img src="images/checkbox.svg" class="checkbox" >
+        ${newListObject.tasks[i].body}
+      </li>`
+    }
   }
-  console.log(listItems)
   return listItems
 }
 

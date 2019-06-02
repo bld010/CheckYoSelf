@@ -18,8 +18,10 @@ class ToDoList {
 
   }
 
-  updateTask(){
-
+  updateTask(taskIndex){
+    this.tasks[taskIndex].checked = !this.tasks[taskIndex].checked;
+    this.saveToStorage();
+    console.log('classupdater')
   }
 }
 
