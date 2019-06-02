@@ -31,15 +31,28 @@ reinstantiateLists()
 pageLoadHandler();
 populateCards(taskListArray);
 
-function filterByUrgencyHandler(){
-  filterByUrgencyButton.clicked = !filterByUrgencyButton.clicked
-    taskListContainer.innerHTML = ''
-  if (filterByUrgencyButton.clicked && generateFilterArray()){
+function styleActiveFilterButton() {
+  filterByUrgencyButton.classList.toggle('active');
+}
+
+function toggleFilterStatus() {
+  filterByUrgencyButton.clicked = !filterByUrgencyButton.clicked;
+}
+
+function populateFilterCards(){
+    if (filterByUrgencyButton.clicked && generateFilterArray()){
     var filterArray = generateFilterArray();
     populateCards(filterArray)
   } else {
     populateCards(taskListArray)
   }
+}
+
+function filterByUrgencyHandler(){
+  taskListContainer.innerHTML = '';
+  toggleFilterStatus();
+  styleActiveFilterButton();
+  populateFilterCards();
 }
 
 function generateFilterArray(){
@@ -49,10 +62,13 @@ function generateFilterArray(){
   return filterArray;
 }
 
-
 function searchHandler(){
   taskListContainer.innerHTML = '';
-  populateCards(generateSearchArray(taskListArray, searchInput.value))
+  if (filterByUrgencyButton.clicked === true) {
+    populateCards(generateSearchArray(generateFilterArray(), searchInput.value));
+  } else {
+    populateCards(generateSearchArray(taskListArray, searchInput.value))
+  }
   if (generateSearchArray(taskListArray, searchInput.value).length === 0) {
     taskListContainer.innerHTML = '<h2>No Lists Match Your Search</h2>'
   }

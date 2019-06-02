@@ -262,6 +262,12 @@ li.checked {
 
 }
 
+.active {
+  border:2px solid #782616;
+  color: #FFFFFF;
+  background-color: #EF4A23;
+}
+
 /*Urgent Card Styles*/
 
 .urgent {
