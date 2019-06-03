@@ -348,7 +348,7 @@ function createTaskElements(newListObject) {
     taskItem.checked === true ? checkedStatus = 'card__checked' : checkedStatus = '';
     listItems += `<li data-id="${taskItem.id}">
       <img src="images/checkbox.svg" class="card__checkbox ${checkedStatus}" >
-      <p class="task-text" contenteditable="true">
+      <p class="card__task-text" contenteditable="true">
         ${taskItem.body}
       </p>
       </li>`

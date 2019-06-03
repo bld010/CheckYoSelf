@@ -268,10 +268,9 @@ img.card__checked {
   content:url('images/checkbox-active.svg');
 }
  
-li.checked {
+.card__checked + p {
   color: #587A8A;
   font-style: italic;
-
 }
 
 .active {
@@ -287,7 +286,7 @@ li.checked {
   border: 2px solid #FFC30C;
 }
 
-.urgent footer{
+.urgent footer {
   border-top: 2px solid #FFC30C;
 }
 
