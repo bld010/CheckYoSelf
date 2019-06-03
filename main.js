@@ -34,7 +34,6 @@ populateCards(taskListArray);
 function editingListsHandler(e) {
   updateTaskText(e);
   updateListTitle(e);
-
 }
 
 function updateTaskText(e) {
@@ -65,17 +64,21 @@ function toggleFilterStatus() {
   filterByUrgencyButton.clicked = !filterByUrgencyButton.clicked;
 }
 
+function noUrgentListsPrompt() {
+  if (generateFilterArray().length === 0) {
+    taskListContainer.innerHTML = '<h2>No urgent lists</h2>'
+  }
+}
+
 function populateFilterCards(){
     if (filterByUrgencyButton.clicked === true){
     var filterArray = generateFilterArray();
-    populateCards(filterArray)
+    noUrgentListsPrompt();
+    populateCards(generateFilterArray(filterArray))
   }
    else {
     populateCards(taskListArray)
   }
-    if (filterByUrgencyButton.clicked === true && generateFilterArray().length === 0) {
-    taskListContainer.innerHTML = '<h2>No urgent lists</h2>'
-    }
 }
 
 function filterByUrgencyHandler(){
@@ -391,7 +394,7 @@ function cardUrgency(newListObject) {
 }
 
 function populateCards(array) {
-  for (var i = 0; i < array.length; i++) {
-    generateCard(array[i]);
-  }
+  array.forEach(function(listObject) {
+    generateCard(listObject);
+  });
 }
