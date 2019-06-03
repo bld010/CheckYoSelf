@@ -307,14 +307,18 @@ function createTaskElements(newListObject) {
   var listItems = `<ul>`   
   for (var i = 0; i < newListObject.tasks.length; i++){
     if (newListObject.tasks[i].checked === true) {
-      listItems += `<li data-id="${newListObject.tasks[i].id}" class="checked" contenteditable="true">
+      listItems += `<li data-id="${newListObject.tasks[i].id}" class="checked">
       <img src="images/checkbox.svg" class="checkbox checked" >
-      ${newListObject.tasks[i].body}
+      <p class="task-text" contenteditable="true">
+        ${newListObject.tasks[i].body}
+      </p>
     </li>`
     } else {
-      listItems += `<li data-id="${newListObject.tasks[i].id}" contenteditable="true">
+      listItems += `<li data-id="${newListObject.tasks[i].id}">
         <img src="images/checkbox.svg" class="checkbox" >
+        <p class="task-text" contenteditable="true">
         ${newListObject.tasks[i].body}
+        </p>
       </li>`
     }
   }
