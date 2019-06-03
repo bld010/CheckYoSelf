@@ -337,23 +337,15 @@ function findTaskIndex(e) {
 function createTaskElements(newListObject) {
   var listItems = `<ul>`   
   for (var i = 0; i < newListObject.tasks.length; i++){
-    if (newListObject.tasks[i].checked === true) {
-      listItems += `<li data-id="${newListObject.tasks[i].id}" class="checked">
-      <img src="images/checkbox.svg" class="checkbox checked" >
+    newListObject.tasks[i].checked === true ? checkedStatus = 'checked' : checkedStatus = '';
+    listItems += `<li data-id="${newListObject.tasks[i].id}">
+      <img src="images/checkbox.svg" class="checkbox ${checkedStatus}" >
       <p class="task-text" contenteditable="true">
         ${newListObject.tasks[i].body}
       </p>
-    </li>`
-    } else {
-      listItems += `<li data-id="${newListObject.tasks[i].id}">
-        <img src="images/checkbox.svg" class="checkbox" >
-        <p class="task-text" contenteditable="true">
-        ${newListObject.tasks[i].body}
-        </p>
       </li>`
-    }
   }
-  return listItems
+  return listItems;
 }
 
 function generateCard(newListObject) {
