@@ -11,17 +11,17 @@ body {
 
 header{
   background-color: #1F1F3D;
-  width: 100%;
   display: flex;
-  justify-content: space-between;
   height: 70px;
+  justify-content: space-between;
   padding: 10px;
+  width: 100%;
 }
 
 h1 {
+  color: #FFFFFF;
   font-size: 40px;
   font-weight: 800;
-  color: #FFFFFF;
   text-transform: uppercase;
 }
 
@@ -35,6 +35,10 @@ h3 {
   break-inside: avoid;
   height: 150px;
   width: 100%;
+
+input,
+p {
+  outline: none;
 }
 
 .header__h1--yellow{
@@ -47,12 +51,12 @@ header form {
 }
 
 header button {
-  height: 50px;
-  width: 50px;
-  border-radius: 2.5px 0 0 2.5px;
   background-color: #C7D3D8;
-  padding: 0;
+  border-radius: 2.5px 0 0 2.5px;
   border: none;
+  height: 50px;
+  padding: 0;
+  width: 50px;
 }
 
 header img {
@@ -61,37 +65,37 @@ header img {
 }
 
 header input {
+  border-radius: 0px 2.5px 2.5px 0;
+  border: none;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 18px;
   height: 50px;
   width: 100%;
-  border: none;
-  font-size: 18px;
-  border-radius: 0px 2.5px 2.5px 0;
-  font-family: 'Open Sans', sans-serif;
 }
 
 aside {
+  background-color: #587A8A;
+  border-right: 2px solid #3C6577;
   height: auto;
   min-height: 92.5vh;
   min-width: 250px;
   width: 30%;
-  background-color: #587A8A;
-  border-right: 2px solid #3C6577;;
 }
 
 label {
-  display: block;
-  padding: 20px 0 5px 0;
   color: #C7D3D8;
+  display: block;
   font-size: 16px;
   font-weight: 700;
+  padding: 20px 0 5px 0;
 }
 
 aside input {
-  height: 50px;
-  border: 2px solid #1F1F3D;
   border-radius: 2.5px;
+  border: 2px solid #1F1F3D;
   font-family: 'Open Sans', sans-serif;
   font-size: 18px;
+  height: 50px;
 }
 
 .aside__new-title-form input {
@@ -99,27 +103,27 @@ aside input {
 }
 
 .aside__new-task-input {
-  width: 90%;
   border-radius: 2.5px 0 0 2.5px;
   margin-right: -2px;
+  width: 90%;
 }
 
 aside button {
-  margin: 20px auto 10px auto;
-  width: 95%;
-  height: 50px;
-  font-family: 'Open Sans', sans-serif;
-  border-radius: 2.5px;
   background-color: #1F1F3D;
+  border-radius: 2.5px;
   border: none;
   color: #FFFFFF;
+  font-family: 'Open Sans', sans-serif;
   font-size: 18px;
   font-weight: 700;
+  height: 50px;
+  margin: 20px auto 10px auto;
+  width: 95%;
 }
 
 aside form {
+  padding: 10px;
   width: 100%;
-  padding: 10px
 }
 
 .aside__new-task-form-input-container {
@@ -127,12 +131,11 @@ aside form {
 }
 
 .aside__new-task-button {
-  height: 50px;
-  width: 50px;
-  margin: 0;
-  background-color: blue;
   background-color: #1F1F3D;
   border-radius: 0 2.5px 2.5px 0;
+  height: 50px;
+  margin: 0;
+  width: 50px;
 }
 
 .aside__new-task-button p {
@@ -146,12 +149,12 @@ aside form {
 }
 
 .aside__filter-section {
-  padding: 0px auto 0px auto;
   border-top: 2px solid #3C6577;
-  margin-top: 20px;
-  width: 100%;
   display: flex;
   justify-content: center;
+  margin-top: 20px;
+  padding: 0px auto 0px auto;
+  width: 100%;
 }
 
 .aside__filter-section button {
@@ -163,13 +166,13 @@ section {
 }
 
 article {
-  width: 100%;
-  border: 2px solid #C7D3D8;
-  padding: 10px 0 0 0;
-  min-height: 250px;
   background-color: #FAFDFF;
-  margin-bottom: 30px;
+  border: 2px solid #C7D3D8;
   break-inside: avoid;
+  margin-bottom: 30px;
+  min-height: 250px;
+  padding: 10px 0 0 0;
+  width: 100%;
 }
 
 .main__content {
@@ -177,28 +180,28 @@ article {
 }
 
 .section__task-list-container {
-  padding: 30px;
-  height: auto;
-  columns: 2 250px;
-  column-gap: 30px;
   background-color: #F3F6F7;
+  column-gap: 30px;
+  columns: 2 250px;
+  height: auto;
+  padding: 30px;
 }
 
 article h2 {
-  width: 100%;
   border-bottom: 2px solid #C7D3D8;
-  padding: 0 10px 0 10px;
-  height: 30px;
+  color: #1F1F3D;
   font-size: 20px;
   font-weight: 700;
-  color: #1F1F3D;
+  height: 30px;
+  padding: 0 10px 0 10px;
+  width: 100%;
 }
 
 .aside__top-section{
-  width: 100%;
   display: flex;
-  justify-content: center;
   flex-direction: column;
+  justify-content: center;
+  width: 100%;
 }
 
 article main {
@@ -259,7 +262,7 @@ li img {
 }
 /*Checked Item Styles*/
 
-img.checked {
+img.card__checked {
   content:url('images/checkbox-active.svg');
 }
  
