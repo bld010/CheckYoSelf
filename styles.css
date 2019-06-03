@@ -342,6 +342,10 @@ aside ul {
     justify-content: center;
   }
 
+  header form {
+    width: 93%;
+  }
+
   aside,
   section {
     width: 100%;
@@ -363,14 +367,6 @@ aside ul {
 }
 
 @media screen and (max-width: 420px) {
-  header input {
-    width: 250px;
-  }
-
-  header form {
-    width: auto;
-  }
-
   h1 {
     font-size: 30px;
   }
