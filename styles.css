@@ -35,6 +35,7 @@ h3 {
   break-inside: avoid;
   height: 150px;
   width: 100%;
+}
 
 input,
 p {
@@ -210,12 +211,12 @@ article main {
 }
 
 article footer {
+  align-items: flex-end;
   border-top: 2px solid #C7D3D8; 
   display: flex;
-  padding: 5px 10px 0px 10px;
   height: 50px;
   justify-content: space-between;
-  align-items: flex-end;
+  padding: 5px 10px 0px 10px;
 }
 
 article button {
@@ -224,18 +225,18 @@ article button {
 }
 
 footer div {
-  height: 40px;
-  width: 40px;
+  align-items: center;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  height: 40px;
+  width: 40px;
 }
 
 footer p {
-  text-transform: uppercase;
+  color: #587A8A;
   font-size: 11px;
   margin-top: 5px;
-  color: #587A8A;
+  text-transform: uppercase;
 }
 
 footer img {
@@ -244,22 +245,23 @@ footer img {
 }
 
 li {
+  align-items: flex-start;
+  display: flex;
   font-size: 20px;
   padding-bottom: 30px;
-  display: flex;
-  align-items: flex-start;
 }
 
 li p {
-  width: 100%;
   height: 35px;
+  width: 100%;
 }
 
 li img {
   height: 20px;
-  width: 20px;
   margin: 0 10px 10px 0;
+  width: 20px;
 }
+
 /*Checked Item Styles*/
 
 img.card__checked {
@@ -273,9 +275,9 @@ li.checked {
 }
 
 .active {
+  background-color: #EF4A23;
   border:2px solid #782616;
   color: #FFFFFF;
-  background-color: #EF4A23;
 }
 
 /*Urgent Card Styles*/
@@ -314,7 +316,6 @@ aside ul {
 .aside__potential-items-item {
   padding: 0 10px 10px 20px;
   word-wrap: normal;
-
 }
 
 .aside__potential-items-item img {
@@ -326,7 +327,6 @@ aside ul {
   display: none;
 }
 
-
 /*Media Queries*/
 
 @media screen and (max-width: 724px) {
@@ -336,10 +336,15 @@ aside ul {
   }
 
   header {
-    flex-direction: column;
+    
     align-items: center;
-    justify-content: center;
+    flex-direction: column;
     height: 150px;
+    justify-content: center;
+  }
+
+  header form {
+    width: 93%;
   }
 
   aside,
@@ -348,6 +353,8 @@ aside ul {
   }
 
   aside {
+    height: 100%;
+    min-height: auto;
     padding: 20px;
   }
 
@@ -357,20 +364,11 @@ aside ul {
 
   .aside__new-task-input {
     width: 92%;
+  }
 }
 
 @media screen and (max-width: 420px) {
-  header input {
-    width: 250px;
-  }
-
-  header form {
-    width: auto;
-
-  }
-
   h1 {
     font-size: 30px;
   }
-  
 }
