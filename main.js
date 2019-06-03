@@ -26,10 +26,38 @@ clearAllButton.addEventListener('click', clearAllButtonHandler);
 taskListContainer.addEventListener('click', taskListContainerHandler);
 searchInput.addEventListener('keyup', searchHandler);
 filterByUrgencyButton.addEventListener('click', filterByUrgencyHandler);
+taskListContainer.addEventListener('focusout', editingListsHandler)
+taskListContainer.addEventListener('keydown', listenForEnter)
 
 reinstantiateLists()
 pageLoadHandler();
 populateCards(taskListArray);
+
+function editingListsHandler(e) {
+  updateTaskText(e);
+  updateListTitle(e);
+
+}
+
+function updateTaskText(e) {
+  if (e.target.classList.contains('task-text')) {
+    taskListArray[getListIndex(e)].tasks[findEditedTaskIndex(e)].body = e.target.innerText;
+    taskListArray[getListIndex(e)].saveToStorage();
+  }
+}
+
+function listenForEnter(e) {
+  if (e.key === 'Enter') {
+      e.target.blur();
+  }
+}
+
+function updateListTitle(e) {
+  if (e.target.classList.contains('list-title')) {
+    taskListArray[getListIndex(e)].title = e.target.innerText;
+    taskListArray[getListIndex(e)].saveToStorage();
+  }
+}
 
 function styleActiveFilterButton() {
   filterByUrgencyButton.classList.toggle('active');
@@ -89,11 +117,13 @@ function taskListContainerHandler(e){
   checkedTaskHandler(e);
   deleteCardHandler(e);
   markUrgentHandler(e);
+  updateTaskText(e);
 }
 
 function markUrgentHandler(e){
   if (e.target.classList.contains('urgent_button')){
   updateUrgencyOnDOM(e);
+  taskListArray[getListIndex(e)].urgent = !taskListArray[getListIndex(e)].urgent;
   taskListArray[getListIndex(e)].updateToDo()
   reinstantiateLists();
   }
@@ -152,6 +182,7 @@ function findEditedTaskIndex(e) {
     return itemObj.id === taskId
   })
   taskListArray[listIndex].updateTask(itemIndex)
+  return itemIndex;
 }
 
 function updateCheckedStyles(e) {
@@ -331,7 +362,7 @@ function generateCard(newListObject) {
   var urgency = cardUrgency(newListObject);
   var newList = `
     <article data-id="${newListObject.id}" class="${urgency}">
-      <h2>${newListObject.title}</h2>
+      <h2 class="list-title" contenteditable="true">${newListObject.title}</h2>
       <main>
         ${listItems}
         </ul>
