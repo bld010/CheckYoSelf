@@ -10,7 +10,8 @@ var potentialItemList = document.querySelector('#aside__potential-items-list');
 var newTaskForm = document.querySelector('.aside__top-section');
 var listTitleInput = document.querySelector('#aside__new-task-list-title-input');
 var taskListContainer = document.querySelector('.section__task-list-container');
-var prompt = document.querySelector('.prompt');
+var prompt = document.querySelector('.section__prompt');
+var dropdown = document.querySelector('#header__search-filter-dropdown')
 var taskListArray = []
 
 localStorage.setItem('newToDoItems', JSON.stringify([]));
@@ -27,9 +28,16 @@ filterByUrgencyButton.addEventListener('click', filterByUrgencyHandler);
 taskListContainer.addEventListener('focusout', editingListsHandler)
 taskListContainer.addEventListener('keydown', listenForEnter)
 
+console.log(dropdown)
+
 reinstantiateLists()
 pageLoadHandler();
 populateCards(taskListArray);
+
+function changeSearchFilter(){
+  // if title -- return title search array
+
+}
 
 function editingListsHandler(e) {
   updateTaskText(e);
@@ -38,7 +46,7 @@ function editingListsHandler(e) {
 }
 
 function updateTaskText(e) {
-  if (e.target.classList.contains('task-text')) {
+  if (e.target.classList.contains('card__task-text')) {
     taskListArray[getListIndex(e)].tasks[findEditedTaskIndex(e)].body = e.target.innerText;
     taskListArray[getListIndex(e)].saveToStorage();
   }
@@ -74,7 +82,7 @@ function populateFilterCards(){
     populateCards(taskListArray)
   }
     if (filterByUrgencyButton.clicked === true && generateFilterArray().length === 0) {
-    taskListContainer.innerHTML = '<h2>No urgent lists</h2>'
+    taskListContainer.innerHTML = '<h3>No urgent lists</h3>'
     }
 }
 
@@ -145,11 +153,12 @@ function deleteButtonEnabler(e) {
 }
 
 function deleteCardHandler(e){
-  if (e.target.classList.contains('delete') && e.target.closest('article').querySelector('.card__footer-delete-button').disabled !== true) {
+  if (e.target.classList.contains('card__delete') && e.target.closest('article').querySelector('.card__footer-delete-button').disabled !== true) {
     deleteCardFromDOM(e);
     var listIndex = getListIndex(e);
     taskListArray[listIndex].deleteFromStorage(listIndex);
     taskListArray.splice(listIndex, 1); 
+    noListsPrompt();
   }
 }
 
@@ -363,9 +372,9 @@ function generateCard(newListObject) {
           <img src="images/urgent.svg" class="urgent_button card__footer-urgent-button-image">
           <p class="urgent_button card__urgent_button_text">Urgent</p>
         </button>
-        <button class="card__footer-delete-button" class="delete" ${deleteButton}>
-          <img src="images/delete.svg" class="delete">
-          <p class="delete" >Delete</p>
+        <button class="card__footer-delete-button card__delete" ${deleteButton}>
+          <img src="images/delete.svg" class="card__delete">
+          <p class="card__delete">Delete</p>
         </button>
       </footer>
     </article>
