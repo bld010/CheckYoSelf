@@ -359,6 +359,7 @@ aside ul {
 
   .aside__new-task-input {
     width: 92%;
+  }
 }
 
 @media screen and (max-width: 420px) {
@@ -373,5 +374,4 @@ aside ul {
   h1 {
     font-size: 30px;
   }
-  
 }
