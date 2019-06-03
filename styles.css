@@ -5,6 +5,8 @@
 body {
   font-family: 'Open Sans', sans-serif;
   height: 100vh; 
+  width: 100%;
+  min-width: 320px;
 }
 
 header{
@@ -28,6 +30,12 @@ h2 {
   font-size: 30px;
 }
 
+h3 { 
+  font-size: 28px;
+  break-inside: avoid;
+  height: 150px;
+  width: 100%;
+
 input,
 p {
   outline: none;
@@ -39,7 +47,7 @@ p {
 
 header form {
   display: flex;
-  width: 30%;
+  width: 350px;
 }
 
 header button {
@@ -70,6 +78,7 @@ aside {
   border-right: 2px solid #3C6577;
   height: auto;
   min-height: 92.5vh;
+  min-width: 250px;
   width: 30%;
 }
 
@@ -136,7 +145,7 @@ aside form {
 }
 
 :disabled {
-  opacity:0.5;
+  opacity:0.2;
 }
 
 .aside__filter-section {
@@ -315,4 +324,53 @@ aside ul {
 
 .hidden {
   display: none;
+}
+
+
+/*Media Queries*/
+
+@media screen and (max-width: 724px) {
+  
+  .main__content {
+    display: block;
+  }
+
+  header {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 150px;
+  }
+
+  aside,
+  section {
+    width: 100%;
+  }
+
+  aside {
+    padding: 20px;
+  }
+
+  h1 {
+    padding-bottom: 15px;
+  } 
+
+  .aside__new-task-input {
+    width: 92%;
+}
+
+@media screen and (max-width: 420px) {
+  header input {
+    width: 250px;
+  }
+
+  header form {
+    width: auto;
+
+  }
+
+  h1 {
+    font-size: 30px;
+  }
+  
 }
