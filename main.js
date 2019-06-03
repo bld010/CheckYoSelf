@@ -17,9 +17,7 @@ localStorage.setItem('newToDoItems', JSON.stringify([]));
 
 newTaskItemButton.addEventListener('click', newTaskItemHandler);
 potentialItemList.addEventListener('click', deletePotentialItem);
-newTaskForm.addEventListener('keyup', function(){
-  newTaskButtonHandler(newTaskItemButton, newTaskItemInput)
-})
+newTaskForm.addEventListener('keyup',newTaskButtonHandler)
 listTitleInput.addEventListener('keyup', makeListandClearButtonHandler)
 makeTaskListButton.addEventListener('click', newTaskListHandler)
 clearAllButton.addEventListener('click', clearAllButtonHandler);
@@ -160,7 +158,7 @@ function deleteCardFromDOM(e){
 }
 
 function checkedTaskHandler(e) {
-  if (e.target.classList.contains('checkbox')){
+  if (e.target.classList.contains('card__checkbox')){
   updateCheckedStyles(e);
   findEditedTaskIndex(e);
   deleteButtonEnabler(e);
@@ -187,9 +185,9 @@ function findEditedTaskIndex(e) {
 
 function updateCheckedStyles(e) {
   var target = e.target;
-  if (target.classList.contains('checkbox')) {
-    target.classList.toggle('checked');
-    target.closest('li').classList.toggle('checked');
+  if (target.classList.contains('card__checkbox')) {
+    target.classList.toggle('card__checked');
+    target.closest('li').classList.toggle('card__checked');
   }
 }
 
@@ -239,7 +237,7 @@ function newTaskButtonHandler() {
 }
 
 function disableButton(buttonElement, associatedInput) {
-  if (associatedInput.value === '') {
+  if (associatedInput.value === ''|| null) {
     buttonElement.disabled = true;
   }
 }
@@ -256,6 +254,7 @@ function newTaskItemHandler(e) {
   apendPotentialItems(newTask.body, newTask.id);
   newTaskItemInput.value = '';
   makeListButtonEnabler();
+  disableButton(newTaskItemButton, newTaskItemInput); 
 }
 
 function newTaskListHandler(e){
@@ -289,8 +288,8 @@ function reinstantiateLists() {
 function createNewToDoList() {
   var toDoItemsArray = JSON.parse(localStorage.getItem('newToDoItems'));
   var newToDoList = new ToDoList(Date.now(), newTaskListTitleInput.value, toDoItemsArray);
-  taskListArray.push(newToDoList)
-  newToDoList.saveToStorage()
+  taskListArray.push(newToDoList);
+  newToDoList.saveToStorage();
   generateCard(newToDoList);
 }
 
@@ -336,24 +335,16 @@ function findTaskIndex(e) {
 
 function createTaskElements(newListObject) {
   var listItems = `<ul>`   
-  for (var i = 0; i < newListObject.tasks.length; i++){
-    if (newListObject.tasks[i].checked === true) {
-      listItems += `<li data-id="${newListObject.tasks[i].id}" class="checked">
-      <img src="images/checkbox.svg" class="checkbox checked" >
+  newListObject.tasks.forEach(function(taskItem){
+    taskItem.checked === true ? checkedStatus = 'card__checked' : checkedStatus = '';
+    listItems += `<li data-id="${taskItem.id}">
+      <img src="images/checkbox.svg" class="card__checkbox ${checkedStatus}" >
       <p class="task-text" contenteditable="true">
-        ${newListObject.tasks[i].body}
+        ${taskItem.body}
       </p>
-    </li>`
-    } else {
-      listItems += `<li data-id="${newListObject.tasks[i].id}">
-        <img src="images/checkbox.svg" class="checkbox" >
-        <p class="task-text" contenteditable="true">
-        ${newListObject.tasks[i].body}
-        </p>
       </li>`
-    }
-  }
-  return listItems
+  })
+  return listItems;
 }
 
 function generateCard(newListObject) {
