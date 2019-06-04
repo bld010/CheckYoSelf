@@ -382,7 +382,7 @@ function cardUrgency(newListObject) {
 }
 
 function populateCards(array) {
-  for (var i = 0; i < array.length; i++) {
-    generateCard(array[i]);
-  }
+  array.forEach(function(taskObj) {
+    generateCard(taskObj)
+  })
 }
