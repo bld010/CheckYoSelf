@@ -96,9 +96,9 @@ function searchHandler() {
   } else {
     populateCards(generateSearchArray(taskListArray, searchInput.value))
   }
-  if (generateSearchArray(taskListArray, searchInput.value).length === 0) {
-    taskListContainer.innerHTML = '<h2>No Lists Match Your Search</h2>'
-  }
+  if (generateSearchArray(taskListArray, searchInput.value).length === 0 && searchInput.value !== '') {
+    taskListContainer.innerHTML = '<article class="section__prompt"><p>No Lists Match Your Search</p></article>'
+  } 
 }
 
 function generateSearchArray(array, searchWords) {
