@@ -11,11 +11,9 @@ var newTaskForm = document.querySelector('.aside__top-section');
 var listTitleInput = document.querySelector('#aside__new-task-list-title-input');
 var taskListContainer = document.querySelector('.section__task-list-container');
 var prompt = document.querySelector('.section__prompt');
-var dropdown = document.querySelector('#header__search-filter-dropdown')
 var taskListArray = []
 
-localStorage.setItem('newToDoItems', JSON.stringify([]));
-
+window.addEventListener('load', pageLoadHandler)
 newTaskItemButton.addEventListener('click', newTaskItemHandler);
 potentialItemList.addEventListener('click', deletePotentialItem);
 newTaskForm.addEventListener('keyup',newTaskButtonHandler)
@@ -28,21 +26,9 @@ filterByUrgencyButton.addEventListener('click', filterByUrgencyHandler);
 taskListContainer.addEventListener('focusout', editingListsHandler)
 taskListContainer.addEventListener('keydown', listenForEnter)
 
-console.log(dropdown)
-
-reinstantiateLists()
-pageLoadHandler();
-populateCards(taskListArray);
-
-function changeSearchFilter(){
-  // if title -- return title search array
-
-}
-
 function editingListsHandler(e) {
   updateTaskText(e);
   updateListTitle(e);
-
 }
 
 function updateTaskText(e) {
@@ -74,16 +60,20 @@ function toggleFilterStatus() {
 }
 
 function populateFilterCards(){
-    if (filterByUrgencyButton.clicked === true){
+  if (filterByUrgencyButton.clicked === true){
     var filterArray = generateFilterArray();
-    populateCards(filterArray)
+    populateCards(filterArray);
+    showNoUrgentListsPrompt();
   }
    else {
     populateCards(taskListArray)
   }
-    if (filterByUrgencyButton.clicked === true && generateFilterArray().length === 0) {
-    taskListContainer.innerHTML = '<h3>No urgent lists</h3>'
-    }
+}
+
+function showNoUrgentListsPrompt() {
+  if (filterByUrgencyButton.clicked === true && generateFilterArray().length === 0) {
+    taskListContainer.innerHTML = '<article class="section__prompt"><p>You don\'t have any urgent lists.<p></article>';
+  }
 }
 
 function filterByUrgencyHandler(){
@@ -100,7 +90,7 @@ function generateFilterArray(){
   return filterArray;
 }
 
-function searchHandler(){
+function searchHandler() {
   taskListContainer.innerHTML = '';
   if (filterByUrgencyButton.clicked === true) {
     populateCards(generateSearchArray(generateFilterArray(), searchInput.value));
@@ -112,25 +102,25 @@ function searchHandler(){
   }
 }
 
-function generateSearchArray(array, searchWords){
+function generateSearchArray(array, searchWords) {
   var searchArray = array.filter(function(arrayObject){
     return arrayObject.title.toLowerCase().includes(searchWords.toLowerCase()) === true;
   })
   return searchArray;
 }
 
-function taskListContainerHandler(e){
+function taskListContainerHandler(e) {
   checkedTaskHandler(e);
   deleteCardHandler(e);
   markUrgentHandler(e);
   updateTaskText(e);
 }
 
-function markUrgentHandler(e){
+function markUrgentHandler(e) {
   if (e.target.classList.contains('urgent_button')){
   updateUrgencyOnDOM(e);
   taskListArray[getListIndex(e)].urgent = !taskListArray[getListIndex(e)].urgent;
-  taskListArray[getListIndex(e)].updateToDo()
+  taskListArray[getListIndex(e)].updateToDo();
   reinstantiateLists();
   }
 }
@@ -140,19 +130,15 @@ function updateUrgencyOnDOM(e) {
 }
 
 function deleteButtonEnabler(e) {
-  var deleteButton = e.target.closest('article').querySelector('.card__footer-delete-button')
+  var deleteButton = e.target.closest('article').querySelector('.card__footer-delete-button');
   var tasksArray = taskListArray[getListIndex(e)].tasks;
-  var notChecked = tasksArray.find(function(taskItem){
+  var notChecked = tasksArray.find(function(taskItem) {
     return taskItem.checked === false;
   })
-  if (notChecked === undefined) {
-    deleteButton.disabled = false;
-  } else {
-    deleteButton.disabled = true;
-  }
+  notChecked === undefined ? deleteButton.disabled = false : deleteButton.disabled = true;
 }
 
-function deleteCardHandler(e){
+function deleteCardHandler(e) {
   if (e.target.classList.contains('card__delete') && e.target.closest('article').querySelector('.card__footer-delete-button').disabled !== true) {
     deleteCardFromDOM(e);
     var listIndex = getListIndex(e);
@@ -162,12 +148,12 @@ function deleteCardHandler(e){
   }
 }
 
-function deleteCardFromDOM(e){
-    e.target.closest('article').remove()
+function deleteCardFromDOM(e) {
+    e.target.closest('article').remove();
 }
 
 function checkedTaskHandler(e) {
-  if (e.target.classList.contains('card__checkbox')){
+  if (e.target.classList.contains('card__checkbox')) {
   updateCheckedStyles(e);
   findEditedTaskIndex(e);
   deleteButtonEnabler(e);
@@ -176,16 +162,15 @@ function checkedTaskHandler(e) {
 
 function getListIndex(e) {
   var cardId = e.target.closest('article').getAttribute('data-id')
-  return listIndex = taskListArray.findIndex(function(taskObj){
+  return listIndex = taskListArray.findIndex(function(taskObj) {
     return taskObj.id == parseInt(cardId)
   })
 }
 
 function findEditedTaskIndex(e) {
-  var listIndex = getListIndex(e)
-  var listObjTasks = taskListArray[listIndex].tasks
+  var listObjTasks = taskListArray[getListIndex(e)].tasks
   var taskId = parseInt(e.target.closest('li').getAttribute('data-id'));
-  var itemIndex = listObjTasks.findIndex(function(itemObj){ 
+  var itemIndex = listObjTasks.findIndex(function(itemObj) { 
     return itemObj.id === taskId
   })
   taskListArray[listIndex].updateTask(itemIndex)
@@ -201,11 +186,7 @@ function updateCheckedStyles(e) {
 }
 
 function noListsPrompt(){
-  if (taskListArray.length === 0){
-    prompt.classList.remove('hidden')
-  } else {
-    prompt.classList.add('hidden');
-  }
+  taskListArray.length === 0 ? prompt.classList.remove('hidden') : prompt.classList.add('hidden');
 }
 
 function clearAllButtonHandler(e) {
@@ -216,11 +197,14 @@ function clearAllButtonHandler(e) {
 }
 
 function pageLoadHandler() {
- disableButton(newTaskItemButton, newTaskItemInput);
- noListsPrompt();
+  localStorage.setItem('newToDoItems', JSON.stringify([]));
+  reinstantiateLists();
+  disableButton(newTaskItemButton, newTaskItemInput);
+  noListsPrompt();
+  populateCards(taskListArray);
 }
 
-function makeListandClearButtonHandler(){
+function makeListandClearButtonHandler() {
   makeListButtonEnabler()
   if (newTaskListTitleInput.value !== ''){
     clearAllButton.disabled = false;
@@ -348,7 +332,7 @@ function createTaskElements(newListObject) {
     taskItem.checked === true ? checkedStatus = 'card__checked' : checkedStatus = '';
     listItems += `<li data-id="${taskItem.id}">
       <img src="images/checkbox.svg" class="card__checkbox ${checkedStatus}" >
-      <p class="task-text" contenteditable="true">
+      <p class="card__task-text" contenteditable="true">
         ${taskItem.body}
       </p>
       </li>`
