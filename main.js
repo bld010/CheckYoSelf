@@ -1,7 +1,7 @@
 var searchButton = document.querySelector('#header__search-button');
 var searchInput = document.querySelector('#header__search-input');
-var newTaskListTitleInput = document.querySelector('#aside__new-task-list-title-input')
-var newTaskItemInput = document.querySelector('#aside__new-task-input')
+var newTaskListTitleInput = document.querySelector('#aside__new-task-list-title-input');
+var newTaskItemInput = document.querySelector('#aside__new-task-input');
 var newTaskItemButton = document.querySelector('.aside__new-task-button');
 var makeTaskListButton = document.querySelector('#aside__make-task-list-button');
 var clearAllButton = document.querySelector('#aside__clear-all-button');
@@ -11,20 +11,20 @@ var newTaskForm = document.querySelector('.aside__top-section');
 var listTitleInput = document.querySelector('#aside__new-task-list-title-input');
 var taskListContainer = document.querySelector('.section__task-list-container');
 var prompt = document.querySelector('.section__prompt');
-var taskListArray = []
+var taskListArray = [];
 
-window.addEventListener('load', pageLoadHandler)
+window.addEventListener('load', pageLoadHandler);
 newTaskItemButton.addEventListener('click', newTaskItemHandler);
 potentialItemList.addEventListener('click', deletePotentialItem);
-newTaskForm.addEventListener('keyup',newTaskButtonHandler)
-listTitleInput.addEventListener('keyup', makeListandClearButtonHandler)
-makeTaskListButton.addEventListener('click', newTaskListHandler)
+newTaskForm.addEventListener('keyup',newTaskButtonHandler);
+listTitleInput.addEventListener('keyup', makeListandClearButtonHandler);
+makeTaskListButton.addEventListener('click', newTaskListHandler);
 clearAllButton.addEventListener('click', clearAllButtonHandler);
 taskListContainer.addEventListener('click', taskListContainerHandler);
 searchInput.addEventListener('keyup', searchHandler);
 filterByUrgencyButton.addEventListener('click', filterByUrgencyHandler);
-taskListContainer.addEventListener('focusout', editingListsHandler)
-taskListContainer.addEventListener('keydown', listenForEnter)
+taskListContainer.addEventListener('focusout', editingListsHandler);
+taskListContainer.addEventListener('keydown', listenForEnter);
 
 function editingListsHandler(e) {
   updateTaskText(e);
@@ -40,7 +40,7 @@ function updateTaskText(e) {
 
 function listenForEnter(e) {
   if (e.key === 'Enter') {
-      e.target.blur();
+    e.target.blur();
   }
 }
 
@@ -94,10 +94,10 @@ function searchHandler() {
   if (filterByUrgencyButton.clicked === true) {
     populateCards(generateSearchArray(generateFilterArray(), searchInput.value));
   } else {
-    populateCards(generateSearchArray(taskListArray, searchInput.value))
+    populateCards(generateSearchArray(taskListArray, searchInput.value));
   }
   if (generateSearchArray(taskListArray, searchInput.value).length === 0 && searchInput.value !== '') {
-    taskListContainer.innerHTML = '<article class="section__prompt"><p>No Lists Match Your Search</p></article>'
+    taskListContainer.innerHTML = '<article class="section__prompt"><p>No Lists Match Your Search</p></article>';
   } 
 }
 
@@ -125,7 +125,7 @@ function markUrgentHandler(e) {
 }
 
 function updateUrgencyOnDOM(e) {
-    e.target.closest('article').classList.toggle('urgent');
+  e.target.closest('article').classList.toggle('urgent');
 }
 
 function deleteButtonEnabler(e) {
@@ -148,7 +148,7 @@ function deleteCardHandler(e) {
 }
 
 function deleteCardFromDOM(e) {
-    e.target.closest('article').remove();
+  e.target.closest('article').remove();
 }
 
 function checkedTaskHandler(e) {
@@ -162,17 +162,17 @@ function checkedTaskHandler(e) {
 function getListIndex(e) {
   var cardId = e.target.closest('article').getAttribute('data-id')
   return listIndex = taskListArray.findIndex(function(taskObj) {
-    return taskObj.id == parseInt(cardId)
+    return taskObj.id == parseInt(cardId);
   })
 }
 
 function findEditedTaskIndex(e) {
-  var listObjTasks = taskListArray[getListIndex(e)].tasks
+  var listObjTasks = taskListArray[getListIndex(e)].tasks;
   var taskId = parseInt(e.target.closest('li').getAttribute('data-id'));
   var itemIndex = listObjTasks.findIndex(function(itemObj) { 
-    return itemObj.id === taskId
+    return itemObj.id === taskId;
   })
-  taskListArray[listIndex].updateTask(itemIndex)
+  taskListArray[listIndex].updateTask(itemIndex);
   return itemIndex;
 }
 
@@ -204,7 +204,7 @@ function pageLoadHandler() {
 }
 
 function makeListandClearButtonHandler() {
-  makeListButtonEnabler()
+  makeListButtonEnabler();
   if (newTaskListTitleInput.value !== '') {
     clearAllButton.disabled = false;
   }
@@ -290,31 +290,31 @@ function newToDoItem(input, id) {
   var newToDoItemsArray = newPotentialItem.getFromStorage();
   newToDoItemsArray.push(newPotentialItem);
   newPotentialItem.saveToStorage(newToDoItemsArray);
-  return newPotentialItem
+  return newPotentialItem;
 }
 
 function apendPotentialItems(input, id) {
   var newPotentialItem = `
-  <li class="aside__potential-items-item">
-    <img src="images/delete-list-item.svg" data-id='${id}' class="delete-list-item">
-    ${input}
-  </li>`
-  potentialItemList.insertAdjacentHTML('beforeend',newPotentialItem)
+    <li class="aside__potential-items-item">
+      <img src="images/delete-list-item.svg" data-id='${id}' class="delete-list-item">
+      ${input}
+    </li>`
+  potentialItemList.insertAdjacentHTML('beforeend',newPotentialItem);
 }
 
 function deletePotentialItem(e) {
   if (e.target.classList.contains('delete-list-item')) {
-    var taskIndex = findTaskIndex(e)
-    var taskArray = JSON.parse(localStorage.getItem('newToDoItems'))
-    reinstantiateTask(e).deleteFromStorage(taskIndex)
-    makeListButtonEnabler()
+    var taskIndex = findTaskIndex(e);
+    var taskArray = JSON.parse(localStorage.getItem('newToDoItems'));
+    reinstantiateTask(e).deleteFromStorage(taskIndex);
+    makeListButtonEnabler();
     e.target.parentNode.remove();
   }
 }
 
 function reinstantiateTask(e) {
   var taskInstance = new ToDoItem(e.target.closest('li').innerText, e.target.getAttribute('data-id'));
-  return taskInstance
+  return taskInstance;
 }
 
 function findTaskIndex(e) {
