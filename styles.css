@@ -176,6 +176,15 @@ article {
   width: 100%;
 }
 
+article.section__prompt {
+  opacity: 0.4;
+  border: 2px dashed #C7D3D8;
+  text-align: center;
+  font-size: 30px;
+  display: flex;
+  align-items: center;
+}
+
 .main__content {
   display: flex;
 }
@@ -322,7 +331,7 @@ aside ul {
   height: 20px;
 }
 
-.hidden {
+.section__prompt.hidden {
   display: none;
 }
 
