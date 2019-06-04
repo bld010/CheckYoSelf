@@ -23,9 +23,13 @@ This is the final, individual project from Front End Module 1 at Turing School o
 ## DelValle Compositions
 
 [GitHub Repo](https://github.com/bld010/CheckYoSelf)
+
 [GitHub Pages Link](https://bld010.github.io/CheckYoSelf/)
 
 ### Desktop Composition
 
+![DelValle Desktop Composition ](https://i.imgur.com/l0hwyoV.png)
 
 ### Mobile Composition
+
+![DelValle Mobile Composition](https://i.imgur.com/HeKi0G0.png)
