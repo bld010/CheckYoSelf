@@ -204,7 +204,7 @@ article h2 {
   font-size: 20px;
   font-weight: 700;
   height: 30px;
-  padding: 0 10px 0 10px;
+  padding: 0 10px 10px 10px;
   width: 100%;
 }
 
@@ -262,7 +262,7 @@ li {
 }
 
 li p {
-  height: 35px;
+  height: auto;
   width: 100%;
 }
 
