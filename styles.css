@@ -195,6 +195,7 @@ article.section__prompt {
   columns: 2 250px;
   height: auto;
   padding: 30px;
+  min-height: 250px;
 }
 
 article h2 {
